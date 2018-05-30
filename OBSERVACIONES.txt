@@ -1,0 +1,2 @@
+1-el proyecto no esta configurado para ejecutarse en relese de 32 (correjido)
+2-el proyecto no esta configurado para ejecutarse en debug de 32 (correjido)
