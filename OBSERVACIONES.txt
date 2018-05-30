@@ -1,4 +1,7 @@
 1-el proyecto no esta configurado para ejecutarse en relese de 32 (correjido)
 2-el proyecto no esta configurado para ejecutarse en debug de 32 (correjido)
-3-tiene hecho todo el input por mous, al dar click al boton derecho del mous se cierra el programa.
+3-tiene hecho todo el input por mous, al dar click al boton derecho del mous 
+se cierra el programa.
 4-el proyecto no cumplia con ninguna de las dos consignas de la parte 1 del TP3
+5-basicamente es un principio es un proyecto que muestra a un cubo que se mueve 
+segun la pocicion del mous
