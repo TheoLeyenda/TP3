@@ -1,5 +1,11 @@
 #include <stdio.h>
+#include <cstdlib>
+#include <iostream>
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+#include "allegro5/allegro_image.h"
+#include "allegro5/allegro_native_dialog.h"
+#include "allegro5/allegro_primitives.h"
 
 const float FPS = 60;
 const int SCREEN_W = 640;
@@ -16,6 +22,7 @@ void movimientoJugador(float X_jugador, float Y_jugador)
 }
 int main(int argc, char **argv)
 {
+	const float FPS = 60;
 	bool gameOver = false;
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -23,8 +30,10 @@ int main(int argc, char **argv)
 	ALLEGRO_BITMAP *Jugador = NULL;
 	float Jugador_x = SCREEN_W / 2.0 - JUGADOR_SIZE / 2.0;
 	float Jugador_y = SCREEN_H / 2.0 - JUGADOR_SIZE / 2.0;
+	ALLEGRO_TIMER *timer = NULL;
 	bool redraw = true;
-
+	
+	al_init();
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
@@ -70,6 +79,11 @@ int main(int argc, char **argv)
 		al_destroy_timer(timer);
 		return -1;
 	}
+	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+
+	al_init_primitives_addon();
+
+	al_install_keyboard();
 
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 
@@ -104,6 +118,15 @@ int main(int argc, char **argv)
 
 			al_flip_display();
 		}
+		//TERMINAR EL MOVIMIENTO UTILIZANDO EL OTRO PROYECTO COMO REFERENCIA
+		ALLEGRO_EVENT ev;
+		al_wait_for_event(event_queue, &ev);
+		switch (ev.keyboard.keycode)
+		{
+			case 1:
+				break;
+		}
+
 	}
 
 	al_destroy_bitmap(Jugador);
