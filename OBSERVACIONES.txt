@@ -1,2 +1,3 @@
 1-el proyecto no esta configurado para ejecutarse en relese de 32 (correjido)
 2-el proyecto no esta configurado para ejecutarse en debug de 32 (correjido)
+3-tiene hecho todo el input por mous, al dar click al boton derecho del mous se cierra el programa.
