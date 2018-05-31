@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 	ALLEGRO_TIMER *timer = NULL;
 	ALLEGRO_BITMAP  *fondo = NULL;
 
-	Jugador *player = new Jugador(64,heightPantalla/2-16,8,32);
+	Jugador *player = new Jugador(600,heightPantalla/2-16,8,32);
 	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla);
 
 	//  Inicia allegro5, esto es necesario para realizar cualquier
@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getY() > 0)
 				{
-					player->setY(player->getY() - 2);
+					player->setY(player->getY() - 2.5);
 					player->setImage(1);
 				}
 				break;
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getY() < heightPantalla - player->getH())
 				{
-					player->setY(player->getY() + 2);
+					player->setY(player->getY() + 2.5);
 					player->setImage(4);
 				}
 				break;
@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getX() > 0)
 				{
-					player->setX(player->getX() - 2);
+					player->setX(player->getX() - 2.5);
 					player->setImage(3);
 				}
 				break;
@@ -142,12 +142,20 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getX() < widthPantalla - player->getH())
 				{
-					player->setX(player->getX() + 2);
+					player->setX(player->getX() + 2.5);
 					player->setImage(2);
 				}
 				break;
 		}
 		//coluciones
+		/*if (player->colicionTanqueRojo(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+		{
+			gameOver = true;
+		}*/
+		if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+		{
+			gameOver = true;
+		}
 	}
 	if (!salirDefinitivo)
 	{

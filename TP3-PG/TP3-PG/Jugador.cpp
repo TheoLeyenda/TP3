@@ -117,7 +117,7 @@ float Jugador::getH()
 {
 	return h;
 }
-bool Jugador::colicionEnemigo(float W_enemy, float H_enemy,float X_enemy, float Y_enemy)
+bool Jugador::colicionTanqueRojo(float W_enemy, float H_enemy,float X_enemy, float Y_enemy)
 {
 	if ((Y_enemy + H_enemy > y && y > Y_enemy && x >= X_enemy && x <= X_enemy + W_enemy) || (Y_enemy + H_enemy > y && y > Y_enemy && x+w >= X_enemy && x+w <= X_enemy + W_enemy))
 	{
@@ -139,5 +139,31 @@ bool Jugador::colicionEnemigo(float W_enemy, float H_enemy,float X_enemy, float 
 		cout << "Arriba" << endl;
 		return true;
 	}
+	return false;
+}
+bool Jugador::colicionCuadrada(float W_enemy, float H_enemy, float X_enemy, float Y_enemy)
+{
+	// reacer las coliciones... tomando en cuenta que todos los lados son iguales
+	if ((Y_enemy + H_enemy > y && y > Y_enemy && x >= X_enemy && x <= X_enemy + W_enemy) || (Y_enemy + H_enemy > y && y > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy))
+	{
+		cout << "abajo" << endl;
+		return true;
+	}
+	if ((x > X_enemy && x<X_enemy + W_enemy && y > Y_enemy && y < Y_enemy + H_enemy) || (x+w > X_enemy && x+w < X_enemy + W_enemy && y< Y_enemy && y> Y_enemy - H_enemy) || (x - w > X_enemy && x - w < X_enemy + W_enemy && y< Y_enemy && y> Y_enemy - H_enemy))
+	{
+		cout << "Derecha" << endl;
+		return true;
+	}
+	if ((x > X_enemy - W_enemy && x<X_enemy && y > Y_enemy && y < Y_enemy + H_enemy) || (x+w > X_enemy - W_enemy && x+w < X_enemy  && y < Y_enemy && y> Y_enemy - H_enemy) || (x - w > X_enemy && x - w < X_enemy + W_enemy && y< Y_enemy && y> Y_enemy - H_enemy))
+	{
+		cout << "izquierda" << endl;
+		return true;
+	}
+	//falta colicion por debajo...
+	/*if (y > Y_enemy && y < Y_enemy + H_enemy && x > X_enemy && x < X_enemy + W_enemy || y-h > Y_enemy && y-h < Y_enemy + H_enemy && x < X_enemy && x > X_enemy + W_enemy || y + h > Y_enemy && y + h < Y_enemy + H_enemy && x > X_enemy && x< X_enemy + W_enemy || y > Y_enemy && y < Y_enemy + H_enemy && x - w > X_enemy && x - w < X_enemy + W_enemy)
+	{
+		cout << "Arriba" << endl;
+		return true;
+	}*/
 	return false;
 }
