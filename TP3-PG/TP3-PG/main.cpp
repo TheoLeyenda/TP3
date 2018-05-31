@@ -100,7 +100,7 @@ int main(int argc, char **argv)
 		al_draw_bitmap(fondo, 0, 0, 0);
 		player->draw(player->getBitmap(), 0);
 		((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
-		((Cazador*)cazador1)->movimiento();
+		//((Cazador*)cazador1)->movimiento();
 		if (bala->getDibujarse())
 		{
 			bala->draw(bala->getBitmap(), 0);
@@ -202,6 +202,10 @@ int main(int argc, char **argv)
 		if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
 		{
 			gameOver = true;
+		}
+		if (bala->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY())) 
+		{
+		
 		}
 	}
 	if (!salirDefinitivo)
