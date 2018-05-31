@@ -11,6 +11,8 @@
 #include "Cazador.h"
 #include "Bala.h"
 #include <list>
+#include <stack>
+#define CARGADOR 15
 using namespace std;
 const float FPS = 60;
 const int SCREEN_W = 640;
@@ -23,9 +25,10 @@ void draw(ALLEGRO_BITMAP *_bitmap,float X_bitmap, float Y_bitmap, int flags)
 }
 int main(int argc, char **argv)
 {
-	const float FPS = 60;
+	int subIndiceBala = 0;
 	bool gameOver = false;
 	bool salirDefinitivo = false;
+	int cantBalas = CARGADOR;
 	//  Crea un puntero a un ALLEGRO_DISPLAY
 	ALLEGRO_DISPLAY* ventana;
 	ALLEGRO_DISPLAY *display = NULL;
@@ -37,7 +40,13 @@ int main(int argc, char **argv)
 
 	Jugador *player = new Jugador(600,heightPantalla/2-16,8,32,1);
 	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla);
-	Bala *bala = new Bala(0,0,2,6,4,1,5);
+	Bala *bala[CARGADOR]; //= new Bala(0, 0, 2, 6, 4, 1, 5);
+	//list<int>* l = new list<int>();
+	
+	for (int i = 0; i < CARGADOR; i++)
+	{
+		bala[i] = new Bala(0, 0, 2, 6, 4, 1, 5);
+	}
 	//  Inicia allegro5, esto es necesario para realizar cualquier
 	//  función de allegro
 	al_init();
@@ -70,7 +79,11 @@ int main(int argc, char **argv)
 	}
 	player->loadImage();
 	cazador1->loadImage();
-	bala->loadImage();
+	//bala->loadImage();
+	for (int i = 0; i < CARGADOR; i++)
+	{
+		bala[i]->loadImage();
+	}
 	fondo = al_load_bitmap("../sprite/FondoOP1.png");
 	if (!fondo)
 	{
@@ -101,10 +114,13 @@ int main(int argc, char **argv)
 		player->draw(player->getBitmap(), 0);
 		((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
 		//((Cazador*)cazador1)->movimiento();
-		if (bala->getDibujarse())
+		for (int i = 0; i < CARGADOR; i++)
 		{
-			bala->draw(bala->getBitmap(), 0);
-			bala->movimiento();
+			if (bala[i]->getDibujarse())
+			{
+				bala[i]->draw(bala[i]->getBitmap(), 0);
+				bala[i]->movimiento();
+			}
 		}
 		//  Intercambia los buffers, ahora la ventana mostrará tendrá fondo
 		//  de color negro. Si minimiza la ventana y la vuelve restaurar, se
@@ -120,6 +136,7 @@ int main(int argc, char **argv)
 			case ALLEGRO_KEY_ESCAPE:
 				gameOver = true;
 				salirDefinitivo = true;
+				
 				break;
 			case ALLEGRO_KEY_UP:
 				//ANDA
@@ -127,9 +144,12 @@ int main(int argc, char **argv)
 				{
 					player->setY(player->getY() - 2.5);
 					player->setImage(1);
-					if (bala->getYaDisparada() == false)
+					for (int i = 0; i < CARGADOR; i++)
 					{
-						bala->setImage(1);
+						if (bala[i]->getYaDisparada() == false)
+						{
+							bala[i]->setImage(1);
+						}
 					}
 				}
 				break;
@@ -139,9 +159,12 @@ int main(int argc, char **argv)
 				{
 					player->setY(player->getY() + 2.5);
 					player->setImage(4);
-					if (bala->getYaDisparada() == false)
+					for (int i = 0; i < CARGADOR; i++)
 					{
-						bala->setImage(4);
+						if (bala[i]->getYaDisparada() == false)
+						{
+							bala[i]->setImage(4);
+						}
 					}
 				}
 				break;
@@ -151,9 +174,12 @@ int main(int argc, char **argv)
 				{
 					player->setX(player->getX() - 2.5);
 					player->setImage(3);
-					if (bala->getYaDisparada() == false)
+					for (int i = 0; i < CARGADOR; i++)
 					{
-						bala->setImage(3);
+						if (bala[i]->getYaDisparada() == false)
+						{
+							bala[i]->setImage(3);
+						}
 					}
 				}
 				break;
@@ -163,36 +189,114 @@ int main(int argc, char **argv)
 				{
 					player->setX(player->getX() + 2.5);
 					player->setImage(2);
-					if (bala->getYaDisparada() == false)
+					for (int i = 0; i < CARGADOR; i++)
 					{
-						bala->setImage(2);
+						if (bala[i]->getYaDisparada() == false)
+						{
+							bala[i]->setImage(2);
+						}
+					}
+				}
+				break;
+				//hacer para que precione solo una vez
+
+			case ALLEGRO_KEY_R:
+				//cantBalas = CARGADOR;
+				if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+				{
+					if (cantBalas <= 0)
+					{
+						for (int i = 0; i < CARGADOR; i++)
+						{
+							if (bala[i]->getYaDisparada() && bala[i]->getDibujarse() == false)
+							{
+								if (!bala[i]->getDibujarse() && player->getVision() == 1 && bala[i]->getYaDisparada() == true)
+								{
+									bala[i]->setX(player->getX() + 18);
+									bala[i]->setY(player->getY());
+									bala[i]->setYaDisparada(false);
+									bala[i]->setImage(1);
+								}
+								if (!bala[i]->getDibujarse() && player->getVision() == 2 && bala[i]->getYaDisparada() == true)
+								{
+									bala[i]->setX(player->getX() + 18);
+									bala[i]->setY(player->getY() + 18);
+									bala[i]->setYaDisparada(false);
+									bala[i]->setImage(2);
+								}
+								if (!bala[i]->getDibujarse() && player->getVision() == 3 && bala[i]->getYaDisparada() == true)
+								{
+									bala[i]->setX(player->getX());
+									bala[i]->setY(player->getY() + 5);
+									bala[i]->setYaDisparada(false);
+									bala[i]->setImage(3);
+								}
+								if (!bala[i]->getDibujarse() && player->getVision() == 4 && bala[i]->getYaDisparada() == true)
+								{
+									bala[i]->setX(player->getX() + 5);
+									bala[i]->setY(player->getY() + player->getH());
+									bala[i]->setYaDisparada(false);
+									bala[i]->setImage(4);
+								}
+							}
+						}
+						cantBalas = CARGADOR;
+						subIndiceBala = 0;
 					}
 				}
 				break;
 			case ALLEGRO_KEY_SPACE:
-				bala->setDibujarse(true);
-				bala->setYaDisparada(true);
+				if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+				{
+					if (cantBalas > 0)
+					{
+						bala[subIndiceBala]->setDibujarse(true);
+						bala[subIndiceBala]->setYaDisparada(true);
+						subIndiceBala++;
+						cantBalas--;
+					}
+				}
 				break;
 		}
-		if (!bala->getDibujarse() && player->getVision() == 1 && bala->getYaDisparada() == false)
+		for (int i = 0; i < CARGADOR; i++)
 		{
-			bala->setX(player->getX() + 18);
-			bala->setY(player->getY());
-		}
-		if (!bala->getDibujarse() && player->getVision() == 2 && bala->getYaDisparada() == false)
-		{
-			bala->setX(player->getX() + 18);
-			bala->setY(player->getY()+ 18 );
-		}
-		if (!bala->getDibujarse() && player->getVision() == 3 && bala->getYaDisparada() == false)
-		{
-			bala->setX(player->getX());
-			bala->setY(player->getY()+ 5);
-		}
-		if (!bala->getDibujarse() && player->getVision() == 4 && bala->getYaDisparada() == false)
-		{
-			bala->setX(player->getX()+5);
-			bala->setY(player->getY() + player->getH());
+			if (!bala[i]->getDibujarse() && player->getVision() == 1 && bala[i]->getYaDisparada() == false)
+			{
+				bala[i]->setX(player->getX() + 18);
+				bala[i]->setY(player->getY());
+			}
+			if (!bala[i]->getDibujarse() && player->getVision() == 2 && bala[i]->getYaDisparada() == false)
+			{
+				bala[i]->setX(player->getX() + 18);
+				bala[i]->setY(player->getY() + 18);
+			}
+			if (!bala[i]->getDibujarse() && player->getVision() == 3 && bala[i]->getYaDisparada() == false)
+			{
+				bala[i]->setX(player->getX());
+				bala[i]->setY(player->getY() + 5);
+			}
+			if (!bala[i]->getDibujarse() && player->getVision() == 4 && bala[i]->getYaDisparada() == false)
+			{
+				bala[i]->setX(player->getX() + 5);
+				bala[i]->setY(player->getY() + player->getH());
+			}
+			if (bala[i]->getX()+bala[i]->getW() >= widthPantalla)
+			{
+				bala[i]->setDibujarse(false);
+			}
+			if (bala[i]->getX() <= 0)
+			{
+				bala[i]->setDibujarse(false);
+			}
+			if (bala[i]->getY() + bala[i]->getH() >= heightPantalla)
+			{
+				bala[i]->setDibujarse(false);
+			}
+			if (bala[i]->getY() <= 0)
+			{
+				bala[i]->setDibujarse(false);
+			}
+
 		}
 		//coluciones
 		/*if (player->colicionTanqueRojo(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
@@ -203,9 +307,12 @@ int main(int argc, char **argv)
 		{
 			gameOver = true;
 		}
-		if (bala->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY())) 
+		for (int i = 0; i < CARGADOR; i++)
 		{
-		
+			if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+			{
+
+			}
 		}
 	}
 	if (!salirDefinitivo)
@@ -234,5 +341,14 @@ int main(int argc, char **argv)
 	al_destroy_timer(timer);
 	al_destroy_bitmap(fondo);
 	delete player;
+	//delete[] bala;
+	for (int i = 0; i < CARGADOR; i++)
+	{
+		if (bala[i] != NULL)
+		{
+			delete bala[i];
+		}
+	}
+	delete cazador1;
 	return 0;
 }
