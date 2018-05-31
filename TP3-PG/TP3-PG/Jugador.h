@@ -16,12 +16,13 @@ private:
 	float h;
 	float w;
 	float rotacion;
+	int vision;
 public:
 	Jugador();
-	Jugador(float _x, float _y, float _w, float _h);
+	Jugador(float _x, float _y, float _w, float _h, int _vision);
 	~Jugador();
 	void loadImage();
-	void Jugador::setImage(int imagen);
+	void setImage(int imagen);
 	bool CheckLoadImage(ALLEGRO_DISPLAY *_display);
 	void draw(ALLEGRO_BITMAP *_bitmapJugador, int flags);
 	ALLEGRO_BITMAP* getBitmap();
@@ -37,5 +38,7 @@ public:
 	float getRotacion();
 	bool colicionTanqueRojo(float W_enemy, float H_enemy, float X_enemy, float Y_enemy);
 	bool colicionCuadrada(float W_enemy, float H_enemy, float X_enemy, float Y_enemy);
+	void setVision(int _vision);
+	int getVision();
 };
 #endif

@@ -13,7 +13,6 @@ Cazador::~Cazador()
 }
 void Cazador::movimiento()
 {
-	cout << "movimiento"<<endl;
 	int aux;
 	//setDiley(150);
 	if (getDiley() >= 150)

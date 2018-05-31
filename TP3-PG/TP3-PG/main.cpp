@@ -9,6 +9,8 @@
 #include "Jugador.h"
 #include "Enemigo.h"
 #include "Cazador.h"
+#include "Bala.h"
+#include <list>
 using namespace std;
 const float FPS = 60;
 const int SCREEN_W = 640;
@@ -33,9 +35,9 @@ int main(int argc, char **argv)
 	ALLEGRO_TIMER *timer = NULL;
 	ALLEGRO_BITMAP  *fondo = NULL;
 
-	Jugador *player = new Jugador(600,heightPantalla/2-16,8,32);
+	Jugador *player = new Jugador(600,heightPantalla/2-16,8,32,1);
 	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla);
-
+	Bala *bala = new Bala(0,0,2,6,4,1,5);
 	//  Inicia allegro5, esto es necesario para realizar cualquier
 	//  función de allegro
 	al_init();
@@ -68,6 +70,7 @@ int main(int argc, char **argv)
 	}
 	player->loadImage();
 	cazador1->loadImage();
+	bala->loadImage();
 	fondo = al_load_bitmap("../sprite/FondoOP1.png");
 	if (!fondo)
 	{
@@ -76,7 +79,6 @@ int main(int argc, char **argv)
 		al_destroy_display(display);
 		return -1;
 	}
-
 	if (!player->CheckLoadImage(display))
 	{
 		al_show_native_message_box(display, "Error", "Error", "Failed to load image!",
@@ -99,6 +101,11 @@ int main(int argc, char **argv)
 		player->draw(player->getBitmap(), 0);
 		((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
 		((Cazador*)cazador1)->movimiento();
+		if (bala->getDibujarse())
+		{
+			bala->draw(bala->getBitmap(), 0);
+			bala->movimiento();
+		}
 		//  Intercambia los buffers, ahora la ventana mostrará tendrá fondo
 		//  de color negro. Si minimiza la ventana y la vuelve restaurar, se
 		//  dará cuenta que ahora la pantalla muestra lo que estuve detrás.
@@ -120,6 +127,10 @@ int main(int argc, char **argv)
 				{
 					player->setY(player->getY() - 2.5);
 					player->setImage(1);
+					if (bala->getYaDisparada() == false)
+					{
+						bala->setImage(1);
+					}
 				}
 				break;
 			case ALLEGRO_KEY_DOWN:
@@ -128,6 +139,10 @@ int main(int argc, char **argv)
 				{
 					player->setY(player->getY() + 2.5);
 					player->setImage(4);
+					if (bala->getYaDisparada() == false)
+					{
+						bala->setImage(4);
+					}
 				}
 				break;
 			case ALLEGRO_KEY_LEFT:
@@ -136,6 +151,10 @@ int main(int argc, char **argv)
 				{
 					player->setX(player->getX() - 2.5);
 					player->setImage(3);
+					if (bala->getYaDisparada() == false)
+					{
+						bala->setImage(3);
+					}
 				}
 				break;
 			case ALLEGRO_KEY_RIGHT:
@@ -144,8 +163,36 @@ int main(int argc, char **argv)
 				{
 					player->setX(player->getX() + 2.5);
 					player->setImage(2);
+					if (bala->getYaDisparada() == false)
+					{
+						bala->setImage(2);
+					}
 				}
 				break;
+			case ALLEGRO_KEY_SPACE:
+				bala->setDibujarse(true);
+				bala->setYaDisparada(true);
+				break;
+		}
+		if (!bala->getDibujarse() && player->getVision() == 1 && bala->getYaDisparada() == false)
+		{
+			bala->setX(player->getX() + 18);
+			bala->setY(player->getY());
+		}
+		if (!bala->getDibujarse() && player->getVision() == 2 && bala->getYaDisparada() == false)
+		{
+			bala->setX(player->getX() + 18);
+			bala->setY(player->getY()+ 18 );
+		}
+		if (!bala->getDibujarse() && player->getVision() == 3 && bala->getYaDisparada() == false)
+		{
+			bala->setX(player->getX());
+			bala->setY(player->getY()+ 5);
+		}
+		if (!bala->getDibujarse() && player->getVision() == 4 && bala->getYaDisparada() == false)
+		{
+			bala->setX(player->getX()+5);
+			bala->setY(player->getY() + player->getH());
 		}
 		//coluciones
 		/*if (player->colicionTanqueRojo(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
