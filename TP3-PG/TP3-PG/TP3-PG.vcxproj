@@ -123,11 +123,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cazador.cpp" />
+    <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pelota.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cazador.h" />
+    <ClInclude Include="Enemigo.h" />
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Pelota.h" />
   </ItemGroup>

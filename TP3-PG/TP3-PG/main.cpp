@@ -7,6 +7,8 @@
 #include "allegro5/allegro_native_dialog.h"
 #include "allegro5/allegro_primitives.h"
 #include "Jugador.h"
+#include "Enemigo.h"
+#include "Cazador.h"
 using namespace std;
 const float FPS = 60;
 const int SCREEN_W = 640;
@@ -32,7 +34,7 @@ int main(int argc, char **argv)
 	ALLEGRO_BITMAP  *fondo = NULL;
 
 	Jugador *player = new Jugador(64,heightPantalla/2-16,8,32);
-	
+	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla);
 
 	//  Inicia allegro5, esto es necesario para realizar cualquier
 	//  función de allegro
@@ -65,6 +67,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 	player->loadImage();
+	cazador1->loadImage();
 	fondo = al_load_bitmap("../sprite/FondoOP1.png");
 	if (!fondo)
 	{
@@ -94,6 +97,8 @@ int main(int argc, char **argv)
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(fondo, 0, 0, 0);
 		player->draw(player->getBitmap(), 0);
+		((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
+		((Cazador*)cazador1)->movimiento();
 		//  Intercambia los buffers, ahora la ventana mostrará tendrá fondo
 		//  de color negro. Si minimiza la ventana y la vuelve restaurar, se
 		//  dará cuenta que ahora la pantalla muestra lo que estuve detrás.
