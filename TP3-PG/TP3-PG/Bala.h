@@ -1,5 +1,7 @@
 #ifndef BALA_H
 #define BALA_H
+#include <stdio.h>
+#include <cstdlib>
 #include <iostream>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>

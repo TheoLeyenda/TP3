@@ -12,7 +12,6 @@
 #include "Bala.h"
 #include <list>
 #include <stack>
-
 #define CARGADOR 15
 using namespace std;
 const float FPS = 60;
@@ -26,6 +25,7 @@ void draw(ALLEGRO_BITMAP *_bitmap,float X_bitmap, float Y_bitmap, int flags)
 }
 int main(int argc, char **argv)
 {
+	//cout << "LA CONCHA DE TU MADRE" << endl;
 	int subIndiceBala = 0;
 	bool gameOver = false;
 	bool salirDefinitivo = false;
@@ -113,7 +113,10 @@ int main(int argc, char **argv)
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(fondo, 0, 0, 0);
 		player->draw(player->getBitmap(), 0);
-		((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
+		if (cazador1->getMuerto() == false) 
+		{
+			((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
+		}
 		((Cazador*)cazador1)->movimiento();
 		for (int i = 0; i < CARGADOR; i++)
 		{
@@ -304,17 +307,21 @@ int main(int argc, char **argv)
 		{
 			gameOver = true;
 		}*/
-		if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+		if (cazador1->getMuerto() == false)
 		{
-			gameOver = true;
-		}
-		for (int i = 0; i < CARGADOR; i++)
-		{
-			if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
 			{
-
+				gameOver = true;
+			}
+			for (int i = 0; i < CARGADOR; i++)
+			{
+				if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+				{
+					cazador1->setMuerto(true);
+				}
 			}
 		}
+		
 	}
 	if (!salirDefinitivo)
 	{
