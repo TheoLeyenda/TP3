@@ -104,7 +104,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>allegro_acodec.lib;allegro_acodec-debug.lib;allegro.lib;allegro_audio.lib;allegro_audio-debug.lib;allegro_color.lib;allegro_primitives.lib;allegro_primitives-debug.lib;allegro_color-debug.lib;allegro_dialog.lib;allegro_dialog-debug.lib;allegro_font.lib;allegro_font-debug.lib;allegro_image.lib;allegro_image-debug.lib;allegro_main.lib;allegro_main-debug.lib;allegro_video.lib;allegro_video-debug.lib;allegro-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>allegro_acodec.lib;allegro.lib;allegro_audio.lib;allegro_color.lib;allegro_primitives.lib;allegro_dialog.lib;allegro_font.lib;allegro_image.lib;allegro_main.lib;allegro_video.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Allegro\allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
     </Link>
@@ -131,14 +131,14 @@
     <ClCompile Include="Enemigo.cpp" />
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pelota.cpp" />
+    <ClCompile Include="Pared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bala.h" />
     <ClInclude Include="Cazador.h" />
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="Jugador.h" />
-    <ClInclude Include="Pelota.h" />
+    <ClInclude Include="Pared.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

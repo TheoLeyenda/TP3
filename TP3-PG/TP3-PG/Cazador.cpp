@@ -10,6 +10,7 @@ Cazador::Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, f
 }
 Cazador::~Cazador()
 {
+	al_destroy_bitmap(bitmapCazador);
 }
 void Cazador::movimiento()
 {
