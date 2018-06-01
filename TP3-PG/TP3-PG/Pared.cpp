@@ -46,13 +46,10 @@ Pared::~Pared()
 {
 	al_destroy_bitmap(bitmapPared);
 }
-void Pared::loadImage()
+void Pared::loadImage(int _numImage)
 {
 	//es virtual
-}
-void Pared::setImage(int imagen)
-{
-	//es virtual
+	//segun el numero de _numImage es la imagen que se cargara a la pared
 }
 bool Pared::CheckLoadImage(ALLEGRO_DISPLAY *_display)
 {

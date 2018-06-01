@@ -17,12 +17,12 @@ private:
 	float y;
 	float h;
 	float w;
+	int numImage;
 public:
 	Pared();
 	Pared(float _x, float _y, float _w, float _h);
 	~Pared();
-	void loadImage();
-	void setImage(int imagen);
+	void loadImage(int _numImage);
 	bool CheckLoadImage(ALLEGRO_DISPLAY *_display);
 	void draw(ALLEGRO_BITMAP *_bitmapEnemigo, int flags);
 	ALLEGRO_BITMAP* getBitmap();
