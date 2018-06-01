@@ -21,13 +21,10 @@ private:
 	int direcion;
 	float anchoPantalla;
 	float altoPantalla;
-	bool Muerto;
 public:
 	Enemigo();
 	Enemigo(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla);
 	~Enemigo();
-	void setMuerto(bool _muerto);
-	bool getMuerto();
 	virtual void loadImage();
 	virtual void setImage(int imagen);
 	bool CheckLoadImage(ALLEGRO_DISPLAY *_display);

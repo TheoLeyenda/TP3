@@ -18,7 +18,6 @@ Enemigo::Enemigo()
 	srand(time(0));
 	anchoPantalla = 640;
 	altoPantalla = 480;
-	Muerto = false;
 }
 Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla)
 {
@@ -31,7 +30,6 @@ Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, fl
 	srand(time(0));
 	anchoPantalla = _anchoPantalla;
 	altoPantalla = _altoPantalla;
-	Muerto = false;
 }
 
 Enemigo::~Enemigo()
@@ -42,14 +40,6 @@ void Enemigo::loadImage()
 {
 	//bitmapJugador = al_load_bitmap("../Sprite/Enemigo1.png");
 	//direcion= 1;
-}
-void Enemigo::setMuerto(bool _muerto)
-{
-	Muerto = _muerto;
-}
-bool Enemigo::getMuerto()
-{
-	return Muerto;
 }
 void Enemigo::setImage(int imagen)
 {
