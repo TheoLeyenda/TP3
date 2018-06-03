@@ -9,13 +9,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Enemigo.h"
+#include "Bala.h"
 using namespace std;
 class Tanque:public Enemigo
 {
 private:
 	ALLEGRO_BITMAP  *bitmapTanque;
+	ALLEGRO_BITMAP *bitmapBalaTanque;
+	Bala* balaTanque;
 	bool esEnemigo;
 	int numSprite;
+	bool disparoHabilitado;
 public:
 	Tanque();
 	Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad, bool _esEnemigo, int _numSprite);
@@ -27,5 +31,9 @@ public:
 	void drawTanque(ALLEGRO_BITMAP *_bitmapTanque, int flags);
 	void setEsEnemigo(bool _esEnemigo);
 	bool getEsEnemigo();
+	Bala* getBalaTanque();
+	void disparar();
+	bool getDisparoHabilitado();
+	void setDisparoHabilitado(bool _disparoHabilitado);
 };
 #endif

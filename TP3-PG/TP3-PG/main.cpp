@@ -50,13 +50,14 @@ int main(int argc, char **argv)
 	Enemigo *cazador1 = new Cazador(0, 0, 20, 20, widthPantalla, heightPantalla, 1,2);
 	Enemigo *blindado = new Blindado(600, 400, 32, 32, widthPantalla, heightPantalla, 100,0.8);
 	Bala *bala[CARGADOR]; //= new Bala(0, 0, 2, 6, 4, 1, 5);
+	
 	Pared *pared = new Pared(0, 60,32, 32);
 	Enemigo *tanqueRojo = new Tanque(200, 200, 36, 38, widthPantalla, heightPantalla,100,0.5,true,1);
 	//list<int>* l = new list<int>();
 	
 	for (int i = 0; i < CARGADOR; i++)
 	{
-		bala[i] = new Bala(0, 0, 2, 6, 4, 1, 5);
+		bala[i] = new Bala(0, 0, 2, 6, 4,1, 5);
 		bala[i]->setYaDisparada(false);
 		bala[i]->setDibujarse(false);
 	}
@@ -133,6 +134,7 @@ int main(int argc, char **argv)
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(fondo, 0, 0, 0);
 		player->draw(player->getBitmap(), 0);
+		((Tanque*)tanqueRojo)->disparar();
 		if (blindado->getMuerto() == false)
 		{
 			((Blindado*)blindado)->drawBlindado(((Blindado*)blindado)->getBitmapBlindado(), 0);
@@ -302,6 +304,7 @@ int main(int argc, char **argv)
 						cantBalas--;
 					}
 				}
+				((Tanque*)tanqueRojo)->setDisparoHabilitado(true);
 				break;
 		}
 		for (int i = 0; i < CARGADOR; i++)
@@ -460,6 +463,9 @@ int main(int argc, char **argv)
 	al_destroy_timer(timer);
 	al_destroy_bitmap(fondo);
 	delete player;
+	delete tanqueRojo;
+	delete pared;
+	delete blindado;
 	//delete[] bala;
 	for (int i = 0; i < CARGADOR; i++)
 	{

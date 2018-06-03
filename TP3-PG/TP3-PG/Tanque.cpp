@@ -9,19 +9,38 @@ void Jugador::draw(ALLEGRO_BITMAP *_bitmapJugador, int flags)
 */
 Tanque::Tanque()
 {
+	bitmapBalaTanque = NULL;
 	bitmapTanque = NULL;
 	numSprite = 1;
+	disparoHabilitado = false;
+	balaTanque = new Bala(getX(), getY(), 4, 12, 6, 1, 1);
+	balaTanque->setX((getX() + getW()));
+	balaTanque->setY((getY() + getH()));
 }
-Tanque::Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad, bool _esEnemigo , int _numSprite):Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla, _vida, _velocidad)
+Tanque::Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad, bool _esEnemigo, int _numSprite):Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla, _vida, _velocidad)
 {
+	bitmapBalaTanque = NULL;
 	bitmapTanque = NULL;
 	esEnemigo = _esEnemigo;
 	numSprite = _numSprite;
+	balaTanque = new Bala(getX(), getY(), 4, 12, 6, 1, 1);
+	balaTanque->setX((getX() + getW()));
+	balaTanque->setY((getY() + getH()));
+	disparoHabilitado = false;
 }
 
 Tanque::~Tanque()
 {
 	al_destroy_bitmap(bitmapTanque);
+	delete balaTanque;
+}
+void Tanque::setDisparoHabilitado(bool _disparoHabilitado)
+{
+	disparoHabilitado = _disparoHabilitado;
+}
+bool Tanque::getDisparoHabilitado()
+{
+	return disparoHabilitado;
 }
 void Tanque::loadImage()
 {
@@ -33,6 +52,7 @@ void Tanque::loadImage()
 	{
 		bitmapTanque = al_load_bitmap("../sprite/TanqueJugado1.png");
 	}
+	bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo.png");
 	SetDirecion(1);
 }
 void Tanque::setImage(int imagen)
@@ -44,18 +64,48 @@ void Tanque::setImage(int imagen)
 		case 1:
 			bitmapTanque = al_load_bitmap("../sprite/Enemigo1.png");
 			SetDirecion(1);
+			//w = 2;
+			//h = 6;
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo.png");
+				balaTanque->setW(4);
+				balaTanque->setH(12);
+				balaTanque->setDireccion(1);
+			}
 			break;
 		case 2:
 			bitmapTanque = al_load_bitmap("../sprite/Enemigo1 - Derecha.png");
 			SetDirecion(2);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Derecha.png");
+				balaTanque->setW(12);
+				balaTanque->setH(4);
+				balaTanque->setDireccion(2);
+			}
 			break;
 		case 3:
 			bitmapTanque = al_load_bitmap("../sprite/Enemigo1 - Izquierda.png");
 			SetDirecion(3);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Izquierda.png");
+				balaTanque->setW(12);
+				balaTanque->setH(4);
+				balaTanque->setDireccion(3);
+			}
 			break;
 		case 4:
 			bitmapTanque = al_load_bitmap("../sprite/Enemigo1 - Abajo.png");
 			SetDirecion(4);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Abajo.png");
+				balaTanque->setW(4);
+				balaTanque->setH(12);
+				balaTanque->setDireccion(4);
+			}
 			break;
 		default:
 			cout << "debe usarse un numero entre el 1 y el 4" << endl;
@@ -69,18 +119,46 @@ void Tanque::setImage(int imagen)
 		case 1:
 			bitmapTanque = al_load_bitmap("../sprite/TanqueJugado1.png");
 			SetDirecion(1);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo.png");
+				balaTanque->setW(4);
+				balaTanque->setH(12);
+				balaTanque->setDireccion(1);
+			}
 			break;
 		case 2:
 			bitmapTanque = al_load_bitmap("../sprite/TanqueJugado1 - Derecha.png");
 			SetDirecion(2);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Derecha.png");
+				balaTanque->setW(12);
+				balaTanque->setH(4);
+				balaTanque->setDireccion(2);
+			}
 			break;
 		case 3:
 			bitmapTanque = al_load_bitmap("../sprite/TanqueJugado1 - Izquierda.png");
 			SetDirecion(3);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Izquierda.png");
+				balaTanque->setW(12);
+				balaTanque->setH(4);
+				balaTanque->setDireccion(3);
+			}
 			break;
 		case 4:
 			bitmapTanque = al_load_bitmap("../sprite/TanqueJugado1 - Abajo.png");
 			SetDirecion(4);
+			if (!disparoHabilitado)
+			{
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Abajo.png");
+				balaTanque->setW(4);
+				balaTanque->setH(12);
+				balaTanque->setDireccion(4);
+			}
 			break;
 		default:
 			cout << "debe usarse un numero entre el 1 y el 4" << endl;
@@ -106,6 +184,7 @@ void Tanque::movimiento()
 		if (getY() >= 0)
 		{
 			setY(getY() - getVelocidad());
+			//balaTanque->setImage(1);
 		}
 		else
 		{
@@ -117,6 +196,7 @@ void Tanque::movimiento()
 		if (getX() <= getAnchoPantalla() - getW())
 		{
 			setX(getX() + getVelocidad());
+			//balaTanque->setImage(2);
 		}
 		else
 		{
@@ -128,6 +208,7 @@ void Tanque::movimiento()
 		if (getX() >= 0)
 		{
 			setX(getX() - getVelocidad());
+			//balaTanque->setImage(3);
 		}
 		else
 		{
@@ -139,6 +220,7 @@ void Tanque::movimiento()
 		if (getY() <= getAltoPantalla() - getH())
 		{
 			setY(getY() + getVelocidad());
+			//balaTanque->setImage(4);
 		}
 		else
 		{
@@ -146,6 +228,11 @@ void Tanque::movimiento()
 		}
 
 	}
+	
+}
+Bala* Tanque::getBalaTanque()
+{
+	return balaTanque;
 }
 ALLEGRO_BITMAP* Tanque::getBitmapTanque()
 {
@@ -162,4 +249,36 @@ void Tanque::setEsEnemigo(bool _esEnemigo)
 bool Tanque::getEsEnemigo()
 {
 	return esEnemigo;
+}
+void Tanque::disparar()
+{
+	if (disparoHabilitado == false)
+	{
+		if (getDirecion() == 1)
+		{
+			balaTanque->setX((getX() + getW())-getW()/2-2);
+			balaTanque->setY((getY() + getH())- getH()/2);
+		}
+		if (getDirecion() == 2)
+		{
+			balaTanque->setX((getX() + getW()) - getW() / 2);
+			balaTanque->setY((getY() + getH()) - getH() / 2-4);
+		}
+		if (getDirecion() == 3)
+		{
+			balaTanque->setX((getX() + getW()) - getW() / 2);
+			balaTanque->setY((getY() + getH()) - getH() / 2 - 4);
+		}
+		if (getDirecion() == 4)
+		{
+			balaTanque->setX((getX() + getW()) - getW() / 2 - 2);
+			balaTanque->setY((getY() + getH()) - getH() / 2);
+		}
+		//dileyDisparo = 100;
+	}
+	else
+	{
+		balaTanque->draw(bitmapBalaTanque, 0);
+		balaTanque->movimiento();
+	}
 }
