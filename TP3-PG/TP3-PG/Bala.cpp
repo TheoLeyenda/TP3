@@ -221,3 +221,11 @@ void Bala::setDanio(float _danio)
 {
 	danio = _danio;
 }
+void Bala::setLastima(bool _lastima)
+{
+	lastima = _lastima;
+}
+bool Bala::getLastima()
+{
+	return lastima;
+}

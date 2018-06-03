@@ -22,6 +22,7 @@ private:
 	float danio;
 	bool dibujarse;
 	bool yaDisparada;
+	bool lastima;
 public:
 	Bala(float _x,float _y,float _w, float _h,float _velocidad,int _direccion,float _danio);
 	Bala();
@@ -51,6 +52,8 @@ public:
 	void setDanio(float danio);
 	bool getDibujarse();
 	void setDibujarse(bool _dibujarse);
+	bool getLastima();
+	void setLastima(bool _lastima);
 	
 };
 #endif BALA_H

@@ -15,7 +15,7 @@ Enemigo::Enemigo()
 	Muerto = false;
 	vida = 100;
 }
-Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla, int _vida)
+Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla, float _vida)
 {
 	bitmapEnemigo = NULL;
 	x = _x;
@@ -107,11 +107,11 @@ float Enemigo::getH()
 {
 	return h;
 }
-void Enemigo::setVida(int _vida)
+void Enemigo::setVida(float _vida)
 {
 	vida = _vida;
 }
-int Enemigo::getVida()
+float Enemigo::getVida()
 {
 	return vida;
 }

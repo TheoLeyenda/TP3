@@ -1,9 +1,6 @@
 ﻿  main.cpp
 c:\users\theo\desktop\image campus\carrera 1 - desarrollo de videojuegos\2do año\programacion de graficos i\trabajos practicos\tp3\tp3-pg\tp3-pg\main.cpp(14): warning C4067: unexpected tokens following preprocessor directive - expected a newline
 c:\users\theo\desktop\image campus\carrera 1 - desarrollo de videojuegos\2do año\programacion de graficos i\trabajos practicos\tp3\tp3-pg\tp3-pg\main.cpp(39): warning C4101: 'ventana': unreferenced local variable
-  Enemigo.cpp
-  Blindado.cpp
-  Generating Code...
   TP3-PG.vcxproj -> C:\Users\Theo\Desktop\image campus\carrera 1 - Desarrollo de videojuegos\2do año\programacion de graficos I\Trabajos Practicos\TP3\TP3-PG\Debug\TP3-PG.exe
   TP3-PG.vcxproj -> C:\Users\Theo\Desktop\image campus\carrera 1 - Desarrollo de videojuegos\2do año\programacion de graficos I\Trabajos Practicos\TP3\TP3-PG\Debug\TP3-PG.pdb (Partial PDB)
   C:\Users\Theo\Desktop\image campus\carrera 1 - Desarrollo de videojuegos\2do año\programacion de graficos I\Trabajos Practicos\TP3\TP3-PG\Allegro\allegro_5.1.12_x86\bin\allegro-5.1.dll

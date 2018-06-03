@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	ALLEGRO_TIMER *timer = NULL;
 	ALLEGRO_BITMAP  *fondo = NULL;
 
-	Jugador *player = new Jugador(350,30,25,25,1);
+	Jugador *player = new Jugador(350,30,25,25,1,3);
 	imagenJugador = player->getVision();
 	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla, 1);
 	Enemigo *blindado = new Blindado(0, 0, 32, 32, widthPantalla, heightPantalla, 100);
@@ -55,6 +55,8 @@ int main(int argc, char **argv)
 	for (int i = 0; i < CARGADOR; i++)
 	{
 		bala[i] = new Bala(0, 0, 2, 6, 4, 1, 5);
+		bala[i]->setYaDisparada(false);
+		bala[i]->setDibujarse(false);
 	}
 	//  Inicia allegro5, esto es necesario para realizar cualquier
 	//  función de allegro
@@ -114,7 +116,10 @@ int main(int argc, char **argv)
 	al_start_timer(timer);
 	while (!gameOver) {
 		player->setImage(imagenJugador);
-
+		if (player->getVidas() <= 0)
+		{
+			gameOver = true;
+		}
 		//  La siguiente función limpia el buffer, con un color determinado, 
 		//  recibe como parámetro un ALLEGRO_COLOR. 
 		//  La función al_map_rgb(0,0,0) recibe como tres enteres sin signo,
@@ -240,6 +245,7 @@ int main(int argc, char **argv)
 									bala[i]->setX(player->getX() + 18);
 									bala[i]->setY(player->getY());
 									bala[i]->setYaDisparada(false);
+									bala[i]->setDibujarse(false);
 									bala[i]->setImage(1);
 								}
 								if (!bala[i]->getDibujarse() && player->getVision() == 2 && bala[i]->getYaDisparada() == true)
@@ -247,6 +253,7 @@ int main(int argc, char **argv)
 									bala[i]->setX(player->getX() + 18);
 									bala[i]->setY(player->getY() + 18);
 									bala[i]->setYaDisparada(false);
+									bala[i]->setDibujarse(false);
 									bala[i]->setImage(2);
 								}
 								if (!bala[i]->getDibujarse() && player->getVision() == 3 && bala[i]->getYaDisparada() == true)
@@ -254,6 +261,7 @@ int main(int argc, char **argv)
 									bala[i]->setX(player->getX());
 									bala[i]->setY(player->getY() + 5);
 									bala[i]->setYaDisparada(false);
+									bala[i]->setDibujarse(false);
 									bala[i]->setImage(3);
 								}
 								if (!bala[i]->getDibujarse() && player->getVision() == 4 && bala[i]->getYaDisparada() == true)
@@ -261,6 +269,7 @@ int main(int argc, char **argv)
 									bala[i]->setX(player->getX() + 5);
 									bala[i]->setY(player->getY() + player->getH());
 									bala[i]->setYaDisparada(false);
+									bala[i]->setDibujarse(false);
 									bala[i]->setImage(4);
 								}
 							}
@@ -277,6 +286,7 @@ int main(int argc, char **argv)
 					{
 						bala[subIndiceBala]->setDibujarse(true);
 						bala[subIndiceBala]->setYaDisparada(true);
+						bala[subIndiceBala]->setLastima(true);
 						subIndiceBala++;
 						cantBalas--;
 					}
@@ -324,6 +334,20 @@ int main(int argc, char **argv)
 
 		}
 		//coliciones
+		//COLICION JUGADOR CON BLINDADO
+		if (blindado->getVida() <= 0)
+		{
+			blindado->setMuerto(true);
+		}
+		if (blindado->getMuerto() == false)
+		{
+			if (player->colicionCuadrada(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()))
+			{
+				//gameOver = true;
+				cout << player->getVidas() << endl;
+				player->setVidas(player->getVidas() - 1);
+			}
+		}
 		//COLICION BALA CON PARED
 		for (int i = 0; i < CARGADOR; i++)
 		{
@@ -342,19 +366,28 @@ int main(int argc, char **argv)
 		{
 			velocidadJugador = VELOCIDADJUGADOR;
 		}
-		//COLICION BALA CON CAZADOR
+		//COLICION BALA CON CAZADOR Y BLINDADO
 		if (cazador1->getMuerto() == false)
 		{
 			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
 			{
-				gameOver = true;
+				cout << player->getVidas() << endl;
+				player->setVidas(player->getVidas() - 1);
 			}
 			for (int i = 0; i < CARGADOR; i++)
 			{
-				if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+				if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()) && bala[i]->getDibujarse() == true)
 				{
 					cazador1->setMuerto(true);
 					bala[i]->setDibujarse(false);
+				}
+				if (bala[i]->colicion(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY())&& bala[i]->getLastima() == true)
+				{
+					//blindado->setMuerto(true);
+					cout << "entre" << endl;
+					blindado->setVida(blindado->getVida() - 4);
+					bala[i]->setDibujarse(false);
+					bala[i]->setLastima(false);
 				}
 			}
 		}

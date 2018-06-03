@@ -17,9 +17,10 @@ private:
 	float w;
 	float rotacion;
 	int vision;
+	int vidas;
 public:
 	Jugador();
-	Jugador(float _x, float _y, float _w, float _h, int _vision);
+	Jugador(float _x, float _y, float _w, float _h, int _vision,int _vidas);
 	~Jugador();
 	void loadImage();
 	void setImage(int imagen);
@@ -40,5 +41,7 @@ public:
 	bool colicionCuadrada(float W_enemy, float H_enemy, float X_enemy, float Y_enemy);
 	void setVision(int _vision);
 	int getVision();
+	void setVidas(int vidas);
+	int getVidas();
 };
 #endif

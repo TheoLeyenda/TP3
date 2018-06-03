@@ -22,10 +22,10 @@ private:
 	float anchoPantalla;
 	float altoPantalla;
 	bool Muerto;
-	int vida;
+	float vida;
 public:
 	Enemigo();
-	Enemigo(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, int _vida);
+	Enemigo(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida);
 	~Enemigo();
 	void setMuerto(bool _muerto);
 	bool getMuerto();
@@ -52,8 +52,8 @@ public:
 	float getAltoPantalla();
 	void SetDirecion(int _direcion);
 	int getDirecion();
-	void setVida(int _vida);
-	int getVida();
+	void setVida(float _vida);
+	float getVida();
 	void checkMuerto();
 };
 #endif

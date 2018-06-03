@@ -10,11 +10,12 @@ Jugador::Jugador()
 	w = 8;
 	h = 32;
 	vision = 0;
+	vidas = 3;
 	//bitmapJugador = al_create_bitmap(w, h);
 
 }
 
-Jugador::Jugador(float _x, float _y, float _w, float _h, int _vision)
+Jugador::Jugador(float _x, float _y, float _w, float _h, int _vision,int _vidas)
 {
 	bitmapJugador = NULL;
 	x = _x;
@@ -22,6 +23,7 @@ Jugador::Jugador(float _x, float _y, float _w, float _h, int _vision)
 	w = _w;
 	h = _h;
 	vision = _vision;
+	vidas = _vidas;
 //	bitmapJugador = al_create_bitmap(w, h);
 }
 
@@ -90,6 +92,14 @@ void Jugador::setVision(int _vision)
 int Jugador::getVision()
 {
 	return vision;
+}
+void Jugador::setVidas(int _vidas)
+{
+	vidas = _vidas;
+}
+int Jugador::getVidas()
+{
+	return vidas;
 }
 void Jugador::setX(float _x) 
 {
