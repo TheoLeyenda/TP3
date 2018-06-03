@@ -14,8 +14,10 @@ Enemigo::Enemigo()
 	altoPantalla = 480;
 	Muerto = false;
 	vida = 100;
+	velocidad = 1;
+	
 }
-Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla, float _vida)
+Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla, float _vida , float _velocidad)
 {
 	bitmapEnemigo = NULL;
 	x = _x;
@@ -28,6 +30,7 @@ Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, fl
 	altoPantalla = _altoPantalla;
 	Muerto = false;
 	vida = _vida;
+	velocidad = _velocidad;
 }
 
 Enemigo::~Enemigo()
@@ -74,6 +77,14 @@ void Enemigo::draw(ALLEGRO_BITMAP *_bitmapEnemigo, int flags)
 ALLEGRO_BITMAP* Enemigo::getBitmap()
 {
 	return bitmapEnemigo;
+}
+void Enemigo::setVelocidad(float _velocidad)
+{
+	velocidad = _velocidad;
+}
+float Enemigo::getVelocidad()
+{
+	return velocidad;
 }
 void Enemigo::setX(float _x)
 {

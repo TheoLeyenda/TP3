@@ -34,5 +34,6 @@ public:
 	void setW(float _w);
 	float getH();
 	float getW();
+	bool ColicionanConmigo(float W_enemy, float H_enemy, float X_enemy, float Y_enemy);
 };
 #endif

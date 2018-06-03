@@ -8,7 +8,7 @@ private:
 	ALLEGRO_BITMAP  *bitmapBlindado;
 public:
 	Blindado();
-	Blindado(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida);
+	Blindado(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad);
 	~Blindado();
 	void movimiento();
 	void loadImage();

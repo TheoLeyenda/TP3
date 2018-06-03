@@ -46,10 +46,10 @@ int main(int argc, char **argv)
 
 	Jugador *player = new Jugador(350,30,25,25,1,3);
 	imagenJugador = player->getVision();
-	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla, 1);
-	Enemigo *blindado = new Blindado(0, 0, 32, 32, widthPantalla, heightPantalla, 100);
+	Enemigo *cazador1 = new Cazador(0, 0, 20, 20, widthPantalla, heightPantalla, 1,2);
+	Enemigo *blindado = new Blindado(600, 400, 32, 32, widthPantalla, heightPantalla, 100,0.8);
 	Bala *bala[CARGADOR]; //= new Bala(0, 0, 2, 6, 4, 1, 5);
-	Pared *pared = new Pared(300, 100,32, 32);
+	Pared *pared = new Pared(0, 60,32, 32);
 	//list<int>* l = new list<int>();
 	
 	for (int i = 0; i < CARGADOR; i++)
@@ -148,7 +148,6 @@ int main(int argc, char **argv)
 				bala[i]->movimiento();
 			}
 		}
-
 		pared->draw(pared->getBitmap(), 0);
 		//  Intercambia los buffers, ahora la ventana mostrará tendrá fondo
 		//  de color negro. Si minimiza la ventana y la vuelve restaurar, se
@@ -246,6 +245,7 @@ int main(int argc, char **argv)
 									bala[i]->setY(player->getY());
 									bala[i]->setYaDisparada(false);
 									bala[i]->setDibujarse(false);
+									bala[i]->setLastima(true);
 									bala[i]->setImage(1);
 								}
 								if (!bala[i]->getDibujarse() && player->getVision() == 2 && bala[i]->getYaDisparada() == true)
@@ -254,6 +254,7 @@ int main(int argc, char **argv)
 									bala[i]->setY(player->getY() + 18);
 									bala[i]->setYaDisparada(false);
 									bala[i]->setDibujarse(false);
+									bala[i]->setLastima(true);
 									bala[i]->setImage(2);
 								}
 								if (!bala[i]->getDibujarse() && player->getVision() == 3 && bala[i]->getYaDisparada() == true)
@@ -262,6 +263,7 @@ int main(int argc, char **argv)
 									bala[i]->setY(player->getY() + 5);
 									bala[i]->setYaDisparada(false);
 									bala[i]->setDibujarse(false);
+									bala[i]->setLastima(true);
 									bala[i]->setImage(3);
 								}
 								if (!bala[i]->getDibujarse() && player->getVision() == 4 && bala[i]->getYaDisparada() == true)
@@ -270,6 +272,7 @@ int main(int argc, char **argv)
 									bala[i]->setY(player->getY() + player->getH());
 									bala[i]->setYaDisparada(false);
 									bala[i]->setDibujarse(false);
+									bala[i]->setLastima(true);
 									bala[i]->setImage(4);
 								}
 							}
@@ -334,6 +337,7 @@ int main(int argc, char **argv)
 
 		}
 		//coliciones
+		
 		//COLICION JUGADOR CON BLINDADO
 		if (blindado->getVida() <= 0)
 		{
@@ -348,6 +352,7 @@ int main(int argc, char **argv)
 				player->setVidas(player->getVidas() - 1);
 			}
 		}
+
 		//COLICION BALA CON PARED
 		for (int i = 0; i < CARGADOR; i++)
 		{
@@ -355,6 +360,16 @@ int main(int argc, char **argv)
 			{
 
 			}
+		}
+		//COLICION BLINDADO PARED
+		if (pared->ColicionanConmigo(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()))
+		{
+			blindado->setDiley(150);
+		}
+		//COLICION CAZADOR PARED
+		if (pared->ColicionanConmigo(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+		{
+			cazador1->setDiley(150);
 		}
 		//COLICION JUGADOR PARED
 		if (player->colicionCuadrada(pared->getW(), pared->getH(), pared->getX(), pared->getY()))
@@ -366,7 +381,7 @@ int main(int argc, char **argv)
 		{
 			velocidadJugador = VELOCIDADJUGADOR;
 		}
-		//COLICION BALA CON CAZADOR Y BLINDADO
+		//COLICION BALA CON CAZADOR
 		if (cazador1->getMuerto() == false)
 		{
 			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
@@ -376,12 +391,21 @@ int main(int argc, char **argv)
 			}
 			for (int i = 0; i < CARGADOR; i++)
 			{
-				if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()) && bala[i]->getDibujarse() == true)
+				if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()) && bala[i]->getDibujarse() == true && bala[i]->getYaDisparada() == true)
 				{
 					cazador1->setMuerto(true);
 					bala[i]->setDibujarse(false);
+					bala[i]->setLastima(true);
+
 				}
-				if (bala[i]->colicion(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY())&& bala[i]->getLastima() == true)
+			}
+		}
+		//COLICION BALA CON BLINDADO
+		if (blindado->getMuerto() == false)
+		{
+			for (int i = 0; i < CARGADOR; i++)
+			{
+				if (bala[i]->colicion(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()) && bala[i]->getLastima() == true && bala[i]->getYaDisparada() == true)
 				{
 					//blindado->setMuerto(true);
 					cout << "entre" << endl;

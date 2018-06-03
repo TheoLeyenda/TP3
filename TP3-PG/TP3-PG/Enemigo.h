@@ -23,9 +23,10 @@ private:
 	float altoPantalla;
 	bool Muerto;
 	float vida;
+	float velocidad;
 public:
 	Enemigo();
-	Enemigo(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida);
+	Enemigo(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida , float _velocidad);
 	~Enemigo();
 	void setMuerto(bool _muerto);
 	bool getMuerto();
@@ -55,5 +56,7 @@ public:
 	void setVida(float _vida);
 	float getVida();
 	void checkMuerto();
+	void setVelocidad(float _velocidad);
+	float getVelocidad();
 };
 #endif

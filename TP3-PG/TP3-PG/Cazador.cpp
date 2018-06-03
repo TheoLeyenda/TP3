@@ -5,7 +5,7 @@
 Cazador::Cazador():Enemigo()
 {
 }
-Cazador::Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida) : Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla, _vida)
+Cazador::Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad) : Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla, _vida, _velocidad)
 {
 }
 Cazador::~Cazador()
@@ -29,7 +29,7 @@ void Cazador::movimiento()
 			//ANDA
 			if (getY() >=0)
 			{
-				setY(getY() - 2);
+				setY(getY() - getVelocidad());
 			}
 			else
 			{
@@ -40,7 +40,7 @@ void Cazador::movimiento()
 		//ANDA
 		if (getX() <= getAnchoPantalla()-getW())
 		{
-			setX(getX() + 2);
+			setX(getX() + getVelocidad());
 		}
 		else
 		{
@@ -51,7 +51,7 @@ void Cazador::movimiento()
 		//ANDA
 		if (getX() >= 0)
 		{
-			setX(getX() - 2);
+			setX(getX() - getVelocidad());
 		}
 		else
 		{
@@ -62,7 +62,7 @@ void Cazador::movimiento()
 		//ANDA
 		if (getY() <= getAltoPantalla()-getH())
 		{
-			setY(getY() + 2);
+			setY(getY() + getVelocidad());
 		}
 		else
 		{

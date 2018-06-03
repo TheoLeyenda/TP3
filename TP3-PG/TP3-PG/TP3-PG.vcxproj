@@ -133,6 +133,7 @@
     <ClCompile Include="Jugador.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pared.cpp" />
+    <ClCompile Include="TanqueRojo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bala.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Enemigo.h" />
     <ClInclude Include="Jugador.h" />
     <ClInclude Include="Pared.h" />
+    <ClInclude Include="TanqueRojo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

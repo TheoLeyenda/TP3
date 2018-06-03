@@ -123,3 +123,30 @@ float Pared::getH()
 {
 	return h;
 }
+bool Pared::ColicionanConmigo(float W_enemy, float H_enemy, float X_enemy, float Y_enemy)
+{
+	if ((x > X_enemy && x<X_enemy + W_enemy && y + h >= Y_enemy && y + h <= Y_enemy + 5 || x + w > X_enemy && x + w<X_enemy + W_enemy && y + h >= Y_enemy && y + h <= Y_enemy + 5))
+	{
+		//cout << "Arriba" << endl;
+		return true;
+	}
+	//ANDA
+	if (((y < Y_enemy + H_enemy && y > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy) || (y + h < Y_enemy + H_enemy && y + h > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy)))
+	{
+		//cout << "Izquierda" << endl;
+		return true;
+	}
+	//ANDA
+	if ((x > X_enemy && x<X_enemy + W_enemy && y > Y_enemy && y < Y_enemy + H_enemy || x > X_enemy && x<X_enemy + W_enemy && y + h > Y_enemy && y + h < Y_enemy + H_enemy))
+	{
+		//cout << "Derecha" << endl;
+		return true;
+	}
+	//ANDA
+	if ((y < Y_enemy + H_enemy && y > Y_enemy + 5 && x > X_enemy && x < X_enemy + W_enemy || y < Y_enemy + H_enemy && y > Y_enemy + 5 && x + w > X_enemy && x + w < X_enemy + W_enemy))
+	{
+		//cout << "Abajo" << endl;
+		return true;
+	}
+return false;
+}
