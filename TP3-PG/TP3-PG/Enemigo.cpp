@@ -1,12 +1,6 @@
 #include "Enemigo.h"
 
-/*
-void Jugador::draw(ALLEGRO_BITMAP *_bitmapJugador, int flags)
-{
 
-	al_draw_bitmap(bitmapJugador, x, y, flags);
-}
-*/
 Enemigo::Enemigo()
 {
 	bitmapEnemigo = NULL;
@@ -19,8 +13,9 @@ Enemigo::Enemigo()
 	anchoPantalla = 640;
 	altoPantalla = 480;
 	Muerto = false;
+	vida = 100;
 }
-Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla)
+Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, float _altoPantalla, int _vida)
 {
 	bitmapEnemigo = NULL;
 	x = _x;
@@ -32,16 +27,22 @@ Enemigo::Enemigo(float _x, float _y, float _w, float _h,float _anchoPantalla, fl
 	anchoPantalla = _anchoPantalla;
 	altoPantalla = _altoPantalla;
 	Muerto = false;
+	vida = _vida;
 }
 
 Enemigo::~Enemigo()
 {
 	al_destroy_bitmap(bitmapEnemigo);
 }
+void Enemigo::checkMuerto()
+{
+	if (vida <= 0)
+	{
+		Muerto = true;
+	}
+}
 void Enemigo::loadImage()
 {
-	//bitmapJugador = al_load_bitmap("../Sprite/Enemigo1.png");
-	//direcion= 1;
 }
 void Enemigo::setMuerto(bool _muerto)
 {
@@ -53,29 +54,7 @@ bool Enemigo::getMuerto()
 }
 void Enemigo::setImage(int imagen)
 {
-	/*switch (imagen)
-	{
-	case 1:
-		bitmapJugador = al_load_bitmap("../Sprite/Enemigo1.png");
-		direcion = 1;
-		break;
-	case 2:
-		bitmapJugador = al_load_bitmap("../Sprite/Enemigo1 - Derecha.png");
-		direcion = 2;
-		break;
-	case 3:
-		bitmapJugador = al_load_bitmap("../Sprite/Enemigo1 - Izquierda.png");
-		direcion = 3;
-		break;
-	case 4:
-		bitmapJugador = al_load_bitmap("../Sprite/Enemigo1 - Abajo.png");
-		direcion = 4;
-		break;
-	default:
-		cout << "debe usarse un numero entre el 1 y el 4" << endl;
-		break;
-	}
-	*/
+	
 }
 bool Enemigo::CheckLoadImage(ALLEGRO_DISPLAY *_display)
 {
@@ -127,6 +106,14 @@ float Enemigo::getW()
 float Enemigo::getH()
 {
 	return h;
+}
+void Enemigo::setVida(int _vida)
+{
+	vida = _vida;
+}
+int Enemigo::getVida()
+{
+	return vida;
 }
 void Enemigo::movimiento()
 {

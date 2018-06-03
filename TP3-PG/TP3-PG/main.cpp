@@ -10,6 +10,7 @@
 #include "Enemigo.h"
 #include "Cazador.h"
 #include "Bala.h"
+#include "Blindado.h"
 #include "Pared.h";
 #include <list>
 #include <stack>
@@ -45,7 +46,8 @@ int main(int argc, char **argv)
 
 	Jugador *player = new Jugador(350,30,25,25,1);
 	imagenJugador = player->getVision();
-	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla);
+	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla, 1);
+	Enemigo *blindado = new Blindado(0, 0, 32, 32, widthPantalla, heightPantalla, 100);
 	Bala *bala[CARGADOR]; //= new Bala(0, 0, 2, 6, 4, 1, 5);
 	Pared *pared = new Pared(300, 100,32, 32);
 	//list<int>* l = new list<int>();
@@ -88,6 +90,7 @@ int main(int argc, char **argv)
 	cazador1->loadImage();
 	//bala->loadImage();
 	pared->loadImage(3);
+	blindado->loadImage();
 	for (int i = 0; i < CARGADOR; i++)
 	{
 		bala[i]->loadImage();
@@ -122,6 +125,11 @@ int main(int argc, char **argv)
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(fondo, 0, 0, 0);
 		player->draw(player->getBitmap(), 0);
+		if (blindado->getMuerto() == false)
+		{
+			((Blindado*)blindado)->drawBlindado(((Blindado*)blindado)->getBitmapBlindado(), 0);
+		}
+		blindado->movimiento();
 		if (cazador1->getMuerto() == false) 
 		{
 			((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
@@ -315,7 +323,7 @@ int main(int argc, char **argv)
 			}
 
 		}
-		//coluciones
+		//coliciones
 		//COLICION BALA CON PARED
 		for (int i = 0; i < CARGADOR; i++)
 		{

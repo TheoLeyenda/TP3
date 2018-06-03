@@ -5,7 +5,7 @@
 Cazador::Cazador():Enemigo()
 {
 }
-Cazador::Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla) : Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla)
+Cazador::Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, int _vida) : Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla, _vida)
 {
 }
 Cazador::~Cazador()
@@ -29,7 +29,7 @@ void Cazador::movimiento()
 			//ANDA
 			if (getY() >=0)
 			{
-				setY(getY() - 1);
+				setY(getY() - 2);
 			}
 			else
 			{
@@ -40,7 +40,7 @@ void Cazador::movimiento()
 		//ANDA
 		if (getX() <= getAnchoPantalla()-getW())
 		{
-			setX(getX() + 1);
+			setX(getX() + 2);
 		}
 		else
 		{
@@ -51,7 +51,7 @@ void Cazador::movimiento()
 		//ANDA
 		if (getX() >= 0)
 		{
-			setX(getX() - 1);
+			setX(getX() - 2);
 		}
 		else
 		{
@@ -62,7 +62,7 @@ void Cazador::movimiento()
 		//ANDA
 		if (getY() <= getAltoPantalla()-getH())
 		{
-			setY(getY() + 1);
+			setY(getY() + 2);
 		}
 		else
 		{
@@ -77,8 +77,7 @@ ALLEGRO_BITMAP* Cazador::getBitmapCazador()
 }
 void Cazador::loadImage()
 {
-	//bitmapJugador = al_load_bitmap("../Sprite/Enemigo1.png");
-	//direcion= 1;
+
 	bitmapCazador = al_load_bitmap("../sprite/EnemigoCazador - arriba.png");
 	SetDirecion(1);
 }
@@ -91,15 +90,15 @@ void Cazador::setImage(int imagen)
 			SetDirecion(1);
 			break;
 		case 2:
-			bitmapCazador = al_load_bitmap("../Sprite/EnemigoCazador - derecha.png");
+			bitmapCazador = al_load_bitmap("../sprite/EnemigoCazador - derecha.png");
 			SetDirecion(2);
 			break;
 		case 3:
-			bitmapCazador = al_load_bitmap("../Sprite/EnemigoCazador - izquierda.png");
+			bitmapCazador = al_load_bitmap("../sprite/EnemigoCazador - izquierda.png");
 			SetDirecion(3);
 			break;
 		case 4:
-			bitmapCazador = al_load_bitmap("../Sprite/EnemigoCazador - abajo.png");
+			bitmapCazador = al_load_bitmap("../sprite/EnemigoCazador - abajo.png");
 			SetDirecion(4);
 			break;
 		default:

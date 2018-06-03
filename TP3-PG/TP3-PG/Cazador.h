@@ -7,7 +7,7 @@ private:
 	ALLEGRO_BITMAP  *bitmapCazador;
 public:
 	Cazador();
-	Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla);
+	Cazador(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, int _vida);
 	void movimiento();
 	~Cazador();
 	void loadImage();
