@@ -149,7 +149,9 @@ int main(int argc, char **argv)
 		{
 			((Tanque*)tanqueRojo)->drawTanque(((Tanque*)tanqueRojo)->getBitmapTanque(), 0);
 		}
+		
 		tanqueRojo->movimiento();
+		
 		for (int i = 0; i < CARGADOR; i++)
 		{
 			if (bala[i]->getDibujarse())
@@ -304,7 +306,7 @@ int main(int argc, char **argv)
 						cantBalas--;
 					}
 				}
-				((Tanque*)tanqueRojo)->setDisparoHabilitado(true);
+				//((Tanque*)tanqueRojo)->setDisparoHabilitado(true);
 				break;
 		}
 		for (int i = 0; i < CARGADOR; i++)

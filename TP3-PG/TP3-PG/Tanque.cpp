@@ -26,7 +26,7 @@ Tanque::Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, flo
 	balaTanque = new Bala(getX(), getY(), 4, 12, 6, 1, 1);
 	balaTanque->setX((getX() + getW()));
 	balaTanque->setY((getY() + getH()));
-	disparoHabilitado = false;
+	disparoHabilitado = true;
 }
 
 Tanque::~Tanque()
@@ -258,21 +258,37 @@ void Tanque::disparar()
 		{
 			balaTanque->setX((getX() + getW())-getW()/2-2);
 			balaTanque->setY((getY() + getH())- getH()/2);
+			bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo.png");
+			balaTanque->setW(4);
+			balaTanque->setH(12);
+			balaTanque->setDireccion(1);
 		}
 		if (getDirecion() == 2)
 		{
 			balaTanque->setX((getX() + getW()) - getW() / 2);
 			balaTanque->setY((getY() + getH()) - getH() / 2-4);
+			bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Derecha.png");
+			balaTanque->setW(12);
+			balaTanque->setH(4);
+			balaTanque->setDireccion(2);
 		}
 		if (getDirecion() == 3)
 		{
 			balaTanque->setX((getX() + getW()) - getW() / 2);
 			balaTanque->setY((getY() + getH()) - getH() / 2 - 4);
+			bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Izquierda.png");
+			balaTanque->setW(12);
+			balaTanque->setH(4);
+			balaTanque->setDireccion(3);
 		}
 		if (getDirecion() == 4)
 		{
 			balaTanque->setX((getX() + getW()) - getW() / 2 - 2);
 			balaTanque->setY((getY() + getH()) - getH() / 2);
+			bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Abajo.png");
+			balaTanque->setW(4);
+			balaTanque->setH(12);
+			balaTanque->setDireccion(4);
 		}
 		//dileyDisparo = 100;
 	}
@@ -280,5 +296,44 @@ void Tanque::disparar()
 	{
 		balaTanque->draw(bitmapBalaTanque, 0);
 		balaTanque->movimiento();
+		if (balaTanque->getY() > getAltoPantalla() || balaTanque->getX() > getAnchoPantalla() || balaTanque->getY()<0 ||balaTanque->getX()<0)
+		{
+			if (getDirecion() == 1)
+			{
+				balaTanque->setX((getX() + getW()) - getW() / 2 - 2);
+				balaTanque->setY((getY() + getH()) - getH() / 2);
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo.png");
+				balaTanque->setW(4);
+				balaTanque->setH(12);
+				balaTanque->setDireccion(1);
+			}
+			if (getDirecion() == 2)
+			{
+				balaTanque->setX((getX() + getW()) - getW() / 2);
+				balaTanque->setY((getY() + getH()) - getH() / 2 - 4);
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Derecha.png");
+				balaTanque->setW(12);
+				balaTanque->setH(4);
+				balaTanque->setDireccion(2);
+			}
+			if (getDirecion() == 3)
+			{
+				balaTanque->setX((getX() + getW()) - getW() / 2);
+				balaTanque->setY((getY() + getH()) - getH() / 2 - 4);
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Izquierda.png");
+				balaTanque->setW(12);
+				balaTanque->setH(4);
+				balaTanque->setDireccion(3);
+			}
+			if (getDirecion() == 4)
+			{
+				balaTanque->setX((getX() + getW()) - getW() / 2 - 2);
+				balaTanque->setY((getY() + getH()) - getH() / 2);
+				bitmapBalaTanque = al_load_bitmap("../sprite/balaTanqueRojo - Abajo.png");
+				balaTanque->setW(4);
+				balaTanque->setH(12);
+				balaTanque->setDireccion(4);
+			}
+		}
 	}
 }
