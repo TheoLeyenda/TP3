@@ -48,8 +48,29 @@ Pared::~Pared()
 }
 void Pared::loadImage(int _numImage)
 {
-	//es virtual
 	//segun el numero de _numImage es la imagen que se cargara a la pared
+	switch (_numImage)
+	{
+		case 1:
+			bitmapPared = al_load_bitmap("../sprite/MarronClarito.png");
+			if (bitmapPared == NULL)
+			{
+				cout << "error, No se cargo la imagen 1"<<endl;
+			}
+			break;
+		case 2:
+			bitmapPared = al_load_bitmap("../sprite/MarronOscuro.png");
+			break;
+		case 3:
+			bitmapPared = al_load_bitmap("../sprite/paredMadera - Abajo.png");
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+	}
 }
 bool Pared::CheckLoadImage(ALLEGRO_DISPLAY *_display)
 {

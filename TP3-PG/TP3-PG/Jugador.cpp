@@ -153,20 +153,29 @@ bool Jugador::colicionTanqueRojo(float W_enemy, float H_enemy,float X_enemy, flo
 }
 bool Jugador::colicionCuadrada(float W_enemy, float H_enemy, float X_enemy, float Y_enemy)
 {
-	// reacer las coliciones... tomando en cuenta que todos los lados son iguales
-	if ((Y_enemy + H_enemy > y && y-h*2-10 > Y_enemy && x >= X_enemy && x <= X_enemy + W_enemy) || (Y_enemy + H_enemy > y && y > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy))
+
+	//ANDA
+	if ((x > X_enemy && x<X_enemy + W_enemy && y + h >= Y_enemy && y + h <= Y_enemy + 5 || x + w > X_enemy && x + w<X_enemy + W_enemy && y + h >= Y_enemy && y + h <= Y_enemy + 5) && vision == 4)
 	{
-		cout << "abajo" << endl;
+		//cout << "Arriba" << endl;
 		return true;
 	}
-	if ((x > X_enemy && x<X_enemy + W_enemy && y > Y_enemy && y < Y_enemy + H_enemy) || (x+w > X_enemy && x+w < X_enemy + W_enemy && y< Y_enemy && y> Y_enemy - H_enemy) || (x - w > X_enemy && x - w < X_enemy + W_enemy && y< Y_enemy && y> Y_enemy - H_enemy))
+	//ANDA
+	if (((y < Y_enemy + H_enemy && y > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy) || (y + h < Y_enemy + H_enemy && y + h > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy))&& vision == 2)
 	{
-		cout << "Derecha" << endl;
+		//cout << "Izquierda" << endl;
 		return true;
 	}
-	if ((x > X_enemy - W_enemy && x<X_enemy && y > Y_enemy && y < Y_enemy + H_enemy) || (x+w > X_enemy - W_enemy && x+w < X_enemy  && y < Y_enemy && y> Y_enemy - H_enemy) || (x - w > X_enemy && x - w < X_enemy + W_enemy && y< Y_enemy && y> Y_enemy - H_enemy))
+	//ANDA
+	if ((x > X_enemy && x<X_enemy + W_enemy && y > Y_enemy && y < Y_enemy + H_enemy || x > X_enemy && x<X_enemy + W_enemy && y + h > Y_enemy && y + h < Y_enemy + H_enemy) && vision == 3)
 	{
-		cout << "izquierda" << endl;
+		//cout << "Derecha" << endl;
+		return true;
+	}
+	//ANDA
+	if ((y < Y_enemy + H_enemy && y > Y_enemy+5  && x > X_enemy && x < X_enemy + W_enemy || y < Y_enemy + H_enemy && y > Y_enemy+5  && x + w > X_enemy && x + w < X_enemy + W_enemy) && vision == 1)
+	{
+		//cout << "Abajo" << endl;
 		return true;
 	}
 	return false;

@@ -90,28 +90,28 @@ float Bala::getH()
 bool Bala::colicion(float W_enemy, float H_enemy, float X_enemy, float Y_enemy)
 {
 	//ver si funciona
-	if ((y < Y_enemy + H_enemy && y+h*2 > Y_enemy && x >= X_enemy && x <= X_enemy + W_enemy) || (Y_enemy + H_enemy > y+h && y+h > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy))
+	//ANDA
+	if ((x > X_enemy && x<X_enemy + W_enemy && y + h >= Y_enemy && y + h <= Y_enemy + 5 || x + w > X_enemy && x + w<X_enemy + W_enemy && y + h >= Y_enemy && y + h <= Y_enemy + 5))
 	{
 		//cout << "Arriba" << endl;
-		dibujarse = false;
 		return true;
 	}
-	if ((x > X_enemy && x<X_enemy + W_enemy && y > Y_enemy && y < Y_enemy + H_enemy) || (x > X_enemy && x < X_enemy + W_enemy && y + w > Y_enemy && y + w < Y_enemy + H_enemy))
+	//ANDA
+	if (((y < Y_enemy + H_enemy && y > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy) || (y + h < Y_enemy + H_enemy && y + h > Y_enemy && x + w >= X_enemy && x + w <= X_enemy + W_enemy)))
 	{
 		//cout << "Izquierda" << endl;
-		dibujarse = false;
 		return true;
 	}
-	if ((x > X_enemy - W_enemy && x<X_enemy && y > Y_enemy && y < Y_enemy + H_enemy) || (x > X_enemy - W_enemy && x < X_enemy  && y + w > Y_enemy && y + w < Y_enemy + H_enemy))
+	//ANDA
+	if ((x > X_enemy && x<X_enemy + W_enemy && y > Y_enemy && y < Y_enemy + H_enemy || x > X_enemy && x<X_enemy + W_enemy && y + h > Y_enemy && y + h < Y_enemy + H_enemy))
 	{
 		//cout << "Derecha" << endl;
-		dibujarse = false;
 		return true;
 	}
-	if (y + h > Y_enemy && y + h < Y_enemy + H_enemy && x > X_enemy && x < X_enemy + W_enemy || y + h > Y_enemy && y + h < Y_enemy + H_enemy && x + w > X_enemy && x + w < X_enemy + W_enemy)
+	//ANDA
+	if ((y < Y_enemy + H_enemy && y > Y_enemy  && x > X_enemy && x < X_enemy + W_enemy || y > Y_enemy + H_enemy && y < Y_enemy  && x + w > X_enemy && x + w < X_enemy + W_enemy))
 	{
 		//cout << "Abajo" << endl;
-		dibujarse = false;
 		return true;
 	}
 	return false;

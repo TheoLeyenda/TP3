@@ -10,9 +10,11 @@
 #include "Enemigo.h"
 #include "Cazador.h"
 #include "Bala.h"
+#include "Pared.h";
 #include <list>
 #include <stack>
 #define CARGADOR 15
+#define VELOCIDADJUGADOR 2.5
 using namespace std;
 const float FPS = 60;
 const int SCREEN_W = 640;
@@ -29,7 +31,9 @@ int main(int argc, char **argv)
 	int subIndiceBala = 0;
 	bool gameOver = false;
 	bool salirDefinitivo = false;
+	int imagenJugador = 0;
 	int cantBalas = CARGADOR;
+	float velocidadJugador = 2.5;
 	//  Crea un puntero a un ALLEGRO_DISPLAY
 	ALLEGRO_DISPLAY* ventana;
 	ALLEGRO_DISPLAY *display = NULL;
@@ -39,9 +43,11 @@ int main(int argc, char **argv)
 	ALLEGRO_TIMER *timer = NULL;
 	ALLEGRO_BITMAP  *fondo = NULL;
 
-	Jugador *player = new Jugador(600,heightPantalla/2-16,8,32,1);
+	Jugador *player = new Jugador(350,30,25,25,1);
+	imagenJugador = player->getVision();
 	Enemigo *cazador1 = new Cazador(600, 400, 20, 20, widthPantalla, heightPantalla);
 	Bala *bala[CARGADOR]; //= new Bala(0, 0, 2, 6, 4, 1, 5);
+	Pared *pared = new Pared(300, 100,32, 32);
 	//list<int>* l = new list<int>();
 	
 	for (int i = 0; i < CARGADOR; i++)
@@ -81,11 +87,12 @@ int main(int argc, char **argv)
 	player->loadImage();
 	cazador1->loadImage();
 	//bala->loadImage();
+	pared->loadImage(3);
 	for (int i = 0; i < CARGADOR; i++)
 	{
 		bala[i]->loadImage();
 	}
-	fondo = al_load_bitmap("../sprite/FondoOP1.png");
+	fondo = al_load_bitmap("../sprite/FondoOP2.png");
 	if (!fondo)
 	{
 		al_show_native_message_box(display, "Error", "Error", "Failed to load image!",
@@ -103,6 +110,8 @@ int main(int argc, char **argv)
 	//game loop
 	al_start_timer(timer);
 	while (!gameOver) {
+		player->setImage(imagenJugador);
+
 		//  La siguiente función limpia el buffer, con un color determinado, 
 		//  recibe como parámetro un ALLEGRO_COLOR. 
 		//  La función al_map_rgb(0,0,0) recibe como tres enteres sin signo,
@@ -126,6 +135,8 @@ int main(int argc, char **argv)
 				bala[i]->movimiento();
 			}
 		}
+
+		pared->draw(pared->getBitmap(), 0);
 		//  Intercambia los buffers, ahora la ventana mostrará tendrá fondo
 		//  de color negro. Si minimiza la ventana y la vuelve restaurar, se
 		//  dará cuenta que ahora la pantalla muestra lo que estuve detrás.
@@ -146,8 +157,9 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getY() > 0)
 				{
-					player->setY(player->getY() - 2.5);
+					player->setY(player->getY() - velocidadJugador);
 					player->setImage(1);
+					imagenJugador = 1;
 					for (int i = 0; i < CARGADOR; i++)
 					{
 						if (bala[i]->getYaDisparada() == false)
@@ -161,8 +173,9 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getY() < heightPantalla - player->getH())
 				{
-					player->setY(player->getY() + 2.5);
+					player->setY(player->getY() + velocidadJugador);
 					player->setImage(4);
+					imagenJugador = 4;
 					for (int i = 0; i < CARGADOR; i++)
 					{
 						if (bala[i]->getYaDisparada() == false)
@@ -176,8 +189,9 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getX() > 0)
 				{
-					player->setX(player->getX() - 2.5);
+					player->setX(player->getX() - velocidadJugador);
 					player->setImage(3);
+					imagenJugador = 3;
 					for (int i = 0; i < CARGADOR; i++)
 					{
 						if (bala[i]->getYaDisparada() == false)
@@ -191,8 +205,9 @@ int main(int argc, char **argv)
 				//ANDA
 				if (player->getX() < widthPantalla - player->getH())
 				{
-					player->setX(player->getX() + 2.5);
+					player->setX(player->getX() + velocidadJugador);
 					player->setImage(2);
+					imagenJugador = 2;
 					for (int i = 0; i < CARGADOR; i++)
 					{
 						if (bala[i]->getYaDisparada() == false)
@@ -202,10 +217,8 @@ int main(int argc, char **argv)
 					}
 				}
 				break;
-				//hacer para que precione solo una vez
 
 			case ALLEGRO_KEY_R:
-				//cantBalas = CARGADOR;
 				if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
 				{
 					if (cantBalas <= 0)
@@ -303,10 +316,25 @@ int main(int argc, char **argv)
 
 		}
 		//coluciones
-		/*if (player->colicionTanqueRojo(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+		//COLICION BALA CON PARED
+		for (int i = 0; i < CARGADOR; i++)
 		{
-			gameOver = true;
-		}*/
+			if (bala[i]->colicion(pared->getW(), pared->getH(), pared->getX(), pared->getY()))
+			{
+
+			}
+		}
+		//COLICION JUGADOR PARED
+		if (player->colicionCuadrada(pared->getW(), pared->getH(), pared->getX(), pared->getY()))
+		{
+			//cout <<"entre";
+			velocidadJugador = 0;
+		}
+		else
+		{
+			velocidadJugador = VELOCIDADJUGADOR;
+		}
+		//COLICION BALA CON CAZADOR
 		if (cazador1->getMuerto() == false)
 		{
 			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
@@ -318,6 +346,7 @@ int main(int argc, char **argv)
 				if (bala[i]->colicion(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
 				{
 					cazador1->setMuerto(true);
+					bala[i]->setDibujarse(false);
 				}
 			}
 		}

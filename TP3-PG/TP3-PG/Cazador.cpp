@@ -29,12 +29,10 @@ void Cazador::movimiento()
 			//ANDA
 			if (getY() >=0)
 			{
-				//y = y - 0.5;
 				setY(getY() - 1);
 			}
 			else
 			{
-				//diley = 150;
 				setDiley(150);
 			}
 			break;
@@ -42,12 +40,10 @@ void Cazador::movimiento()
 		//ANDA
 		if (getX() <= getAnchoPantalla()-getW())
 		{
-			//x = x + 0.5;
 			setX(getX() + 1);
 		}
 		else
 		{
-			//diley = 150;
 			setDiley(150);
 		}
 		break;
@@ -55,12 +51,10 @@ void Cazador::movimiento()
 		//ANDA
 		if (getX() >= 0)
 		{
-			//x = x - 0.5;
 			setX(getX() - 1);
 		}
 		else
 		{
-			//diley = 150;
 			setDiley(150);
 		}
 		break;
@@ -68,12 +62,10 @@ void Cazador::movimiento()
 		//ANDA
 		if (getY() <= getAltoPantalla()-getH())
 		{
-			//y = y + 0.5;
 			setY(getY() + 1);
 		}
 		else
 		{
-			//diley = 150;
 			setDiley(150);
 		}
 
