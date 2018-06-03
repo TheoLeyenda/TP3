@@ -11,7 +11,8 @@
 #include "Cazador.h"
 #include "Bala.h"
 #include "Blindado.h"
-#include "Pared.h";
+#include "Pared.h"
+#include "Tanque.h"
 #include <list>
 #include <stack>
 #define CARGADOR 15
@@ -50,6 +51,7 @@ int main(int argc, char **argv)
 	Enemigo *blindado = new Blindado(600, 400, 32, 32, widthPantalla, heightPantalla, 100,0.8);
 	Bala *bala[CARGADOR]; //= new Bala(0, 0, 2, 6, 4, 1, 5);
 	Pared *pared = new Pared(0, 60,32, 32);
+	Enemigo *tanqueRojo = new Tanque(200, 200, 36, 38, widthPantalla, heightPantalla,100,0.5,true,1);
 	//list<int>* l = new list<int>();
 	
 	for (int i = 0; i < CARGADOR; i++)
@@ -93,6 +95,7 @@ int main(int argc, char **argv)
 	//bala->loadImage();
 	pared->loadImage(3);
 	blindado->loadImage();
+	tanqueRojo->loadImage();
 	for (int i = 0; i < CARGADOR; i++)
 	{
 		bala[i]->loadImage();
@@ -139,7 +142,12 @@ int main(int argc, char **argv)
 		{
 			((Cazador*)cazador1)->drawCazador(((Cazador*)cazador1)->getBitmapCazador(), 0);
 		}
-		((Cazador*)cazador1)->movimiento();
+		cazador1->movimiento();
+		if (tanqueRojo->getMuerto() == false)
+		{
+			((Tanque*)tanqueRojo)->drawTanque(((Tanque*)tanqueRojo)->getBitmapTanque(), 0);
+		}
+		tanqueRojo->movimiento();
 		for (int i = 0; i < CARGADOR; i++)
 		{
 			if (bala[i]->getDibujarse())
@@ -338,11 +346,13 @@ int main(int argc, char **argv)
 		}
 		//coliciones
 		
-		//COLICION JUGADOR CON BLINDADO
+		
 		if (blindado->getVida() <= 0)
 		{
 			blindado->setMuerto(true);
 		}
+
+		//COLICION JUGADOR CON BLINDADO
 		if (blindado->getMuerto() == false)
 		{
 			if (player->colicionCuadrada(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()))
@@ -360,6 +370,12 @@ int main(int argc, char **argv)
 			{
 
 			}
+		}
+		//COLICION TANQUE JUGADOR
+		if (player->colicionCuadrada(tanqueRojo->getW(), tanqueRojo->getH(), tanqueRojo->getX(), tanqueRojo->getY()))
+		{
+			cout << player->getVidas() << endl;
+			player->setVidas(player->getVidas() - 1);
 		}
 		//COLICION BLINDADO PARED
 		if (pared->ColicionanConmigo(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()))
@@ -384,6 +400,7 @@ int main(int argc, char **argv)
 		//COLICION BALA CON CAZADOR
 		if (cazador1->getMuerto() == false)
 		{
+			//COLICION JUGADOR CON CAZADOR
 			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
 			{
 				cout << player->getVidas() << endl;

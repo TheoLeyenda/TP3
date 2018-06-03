@@ -36,7 +36,7 @@
     <ClCompile Include="Blindado.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="TanqueRojo.cpp">
+    <ClCompile Include="Tanque.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="Blindado.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="TanqueRojo.h">
+    <ClInclude Include="Tanque.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
