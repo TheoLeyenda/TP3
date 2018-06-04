@@ -374,6 +374,12 @@ int main(int argc, char **argv)
 
 			}
 		}
+		//COLICION BALA del TANQUE CON JUGAOR (no anda) PROGRAMAR COLICICON BALA del TANQUE CON JUGADOR
+		if(((Tanque*)tanqueRojo)->getBalaTanque()->colicion(player->getW(),player->getH(),player->getX(),player->getY()))
+		{
+			cout << player->getVidas() << endl;
+			player->setVidas(player->getVidas() - 1);	
+		}
 		//COLICION TANQUE JUGADOR
 		if (player->colicionCuadrada(tanqueRojo->getW(), tanqueRojo->getH(), tanqueRojo->getX(), tanqueRojo->getY()))
 		{
