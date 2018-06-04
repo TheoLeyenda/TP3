@@ -58,5 +58,6 @@ public:
 	void checkMuerto();
 	void setVelocidad(float _velocidad);
 	float getVelocidad();
+	bool colicionCuadrada(float W_enemy, float H_enemy, float X_enemy, float Y_enemy);
 };
 #endif
