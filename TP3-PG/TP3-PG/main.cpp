@@ -354,7 +354,11 @@ int main(int argc, char **argv)
 		{
 			blindado->setMuerto(true);
 		}
-
+		if (tanqueRojo->getVida() <= 0)
+		{
+			tanqueRojo->setMuerto(true);
+			((Tanque*)tanqueRojo)->setDisparoHabilitado(false);
+		}
 		//COLICION JUGADOR CON BLINDADO
 		if (blindado->getMuerto() == false)
 		{
@@ -385,6 +389,11 @@ int main(int argc, char **argv)
 		{
 			cout << player->getVidas() << endl;
 			player->setVidas(player->getVidas() - 1);
+		}
+		//COLICION TANQUE PARED
+		if(pared->ColicionanConmigo(tanqueRojo->getW(), tanqueRojo->getH(), tanqueRojo->getX(), tanqueRojo->getY()))
+		{
+			tanqueRojo->setDiley(150);
 		}
 		//COLICION BLINDADO PARED
 		if (pared->ColicionanConmigo(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()))
@@ -441,7 +450,20 @@ int main(int argc, char **argv)
 				}
 			}
 		}
-		
+		if (tanqueRojo->getMuerto() == false)
+		{
+			for (int i = 0; i < CARGADOR; i++)
+			{
+				if (bala[i]->colicion(tanqueRojo->getW(), tanqueRojo->getH(), tanqueRojo->getX(), tanqueRojo->getY()) && bala[i]->getLastima() == true && bala[i]->getYaDisparada() == true)
+				{
+					//blindado->setMuerto(true);
+					cout << "entre" << endl;
+					tanqueRojo->setVida(tanqueRojo->getVida() - 2.5);
+					bala[i]->setDibujarse(false);
+					bala[i]->setLastima(false);
+				}
+			}
+		}
 	}
 	if (!salirDefinitivo)
 	{
