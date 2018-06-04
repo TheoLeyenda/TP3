@@ -16,6 +16,7 @@ Tanque::Tanque()
 	balaTanque = new Bala(getX(), getY(), 4, 12, 6, 1, 1);
 	balaTanque->setX((getX() + getW()));
 	balaTanque->setY((getY() + getH()));
+	usandose = false;
 }
 Tanque::Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad, bool _esEnemigo, int _numSprite):Enemigo(_x, _y, _w, _h, _anchoPantalla, _altoPantalla, _vida, _velocidad)
 {
@@ -27,6 +28,7 @@ Tanque::Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, flo
 	balaTanque->setX((getX() + getW()));
 	balaTanque->setY((getY() + getH()));
 	disparoHabilitado = true;
+	usandose = false;
 }
 
 Tanque::~Tanque()
@@ -41,6 +43,14 @@ void Tanque::setDisparoHabilitado(bool _disparoHabilitado)
 bool Tanque::getDisparoHabilitado()
 {
 	return disparoHabilitado;
+}
+void Tanque::setUsandose(bool _usandose)
+{
+	usandose = _usandose;
+}
+bool Tanque::getUsandose()
+{
+	return usandose;
 }
 void Tanque::loadImage()
 {

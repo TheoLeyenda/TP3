@@ -11,6 +11,7 @@ Jugador::Jugador()
 	h = 32;
 	vision = 0;
 	vidas = 3;
+	dibujarse = true;
 	//bitmapJugador = al_create_bitmap(w, h);
 
 }
@@ -24,6 +25,7 @@ Jugador::Jugador(float _x, float _y, float _w, float _h, int _vision,int _vidas)
 	h = _h;
 	vision = _vision;
 	vidas = _vidas;
+	dibujarse = true;
 //	bitmapJugador = al_create_bitmap(w, h);
 }
 
@@ -84,6 +86,14 @@ void Jugador::draw(ALLEGRO_BITMAP *_bitmapJugador, int flags)
 ALLEGRO_BITMAP* Jugador::getBitmap()
 {
 	return bitmapJugador;
+}
+void Jugador::setDibujarse(bool _dibujarse)
+{
+	dibujarse = _dibujarse;
+}
+bool Jugador::getDibujarse()
+{
+	return dibujarse;
 }
 void Jugador::setVision(int _vision)
 {

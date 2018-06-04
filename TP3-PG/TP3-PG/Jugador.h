@@ -18,6 +18,7 @@ private:
 	float rotacion;
 	int vision;
 	int vidas;
+	bool dibujarse;
 public:
 	Jugador();
 	Jugador(float _x, float _y, float _w, float _h, int _vision,int _vidas);
@@ -43,5 +44,7 @@ public:
 	int getVision();
 	void setVidas(int vidas);
 	int getVidas();
+	void setDibujarse(bool _dibujarse);
+	bool getDibujarse();
 };
 #endif

@@ -20,6 +20,7 @@ private:
 	bool esEnemigo;
 	int numSprite;
 	bool disparoHabilitado;
+	bool usandose;
 public:
 	Tanque();
 	Tanque(float _x, float _y, float _w, float _h, float _anchoPantalla, float _altoPantalla, float _vida, float _velocidad, bool _esEnemigo, int _numSprite);
@@ -35,5 +36,7 @@ public:
 	void disparar();
 	bool getDisparoHabilitado();
 	void setDisparoHabilitado(bool _disparoHabilitado);
+	void setUsandose(bool _usandose);
+	bool getUsandose();
 };
 #endif

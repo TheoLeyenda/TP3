@@ -53,6 +53,8 @@ int main(int argc, char **argv)
 	
 	Pared *pared = new Pared(0, 60,32, 32);
 	Enemigo *tanqueRojo = new Tanque(200, 200, 36, 38, widthPantalla, heightPantalla,100,0.5,true,1);
+	Enemigo *tanqueUsable = new Tanque(0, 0, 28, 26, widthPantalla, heightPantalla, 100, 0.8, false, 2);
+	((Tanque*)tanqueUsable)->setDisparoHabilitado(false);
 	//list<int>* l = new list<int>();
 	
 	for (int i = 0; i < CARGADOR; i++)
@@ -97,6 +99,7 @@ int main(int argc, char **argv)
 	pared->loadImage(3);
 	blindado->loadImage();
 	tanqueRojo->loadImage();
+	tanqueUsable->loadImage();
 	for (int i = 0; i < CARGADOR; i++)
 	{
 		bala[i]->loadImage();
@@ -133,8 +136,15 @@ int main(int argc, char **argv)
 		//  al_clear_to_color(...)
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_bitmap(fondo, 0, 0, 0);
-		player->draw(player->getBitmap(), 0);
+		if (player->getDibujarse() == true)
+		{
+			player->draw(player->getBitmap(), 0);
+		}
 		((Tanque*)tanqueRojo)->disparar();
+		if (tanqueUsable->getMuerto() == false)
+		{
+			((Tanque*)tanqueUsable)->drawTanque(((Tanque*)tanqueUsable)->getBitmapTanque(), 0);
+		}
 		if (blindado->getMuerto() == false)
 		{
 			((Blindado*)blindado)->drawBlindado(((Blindado*)blindado)->getBitmapBlindado(), 0);
@@ -176,8 +186,26 @@ int main(int argc, char **argv)
 				salirDefinitivo = true;
 				
 				break;
+			case ALLEGRO_KEY_E:
+				if (player->getDibujarse() == false)
+				{
+					player->setY(tanqueUsable->getY() + 20);
+					player->setX(tanqueUsable->getX() - 30);
+					player->setDibujarse(true);
+					((Tanque*)tanqueUsable)->setUsandose(false);
+				}
+					break;
 			case ALLEGRO_KEY_UP:
 				//ANDA
+				if (((Tanque*)tanqueUsable)->getUsandose() == true)
+				{
+					if (tanqueUsable->getY() > 0)
+					{
+						tanqueUsable->setY( (tanqueUsable->getY()) - (tanqueUsable->getVelocidad()) );
+						tanqueUsable->setImage(1);
+						((Tanque*)tanqueUsable)->getBalaTanque()->setImage(1);
+					}
+				}
 				if (player->getY() > 0)
 				{
 					player->setY(player->getY() - velocidadJugador);
@@ -191,9 +219,19 @@ int main(int argc, char **argv)
 						}
 					}
 				}
+				
 				break;
 			case ALLEGRO_KEY_DOWN:
 				//ANDA
+				if (((Tanque*)tanqueUsable)->getUsandose() == true)
+				{
+					if (tanqueUsable->getY() < heightPantalla - tanqueUsable->getH())
+					{
+						tanqueUsable->setY((tanqueUsable->getY()) + (tanqueUsable->getVelocidad()));
+						tanqueUsable->setImage(4);
+						((Tanque*)tanqueUsable)->getBalaTanque()->setImage(4);
+					}
+				}
 				if (player->getY() < heightPantalla - player->getH())
 				{
 					player->setY(player->getY() + velocidadJugador);
@@ -210,6 +248,15 @@ int main(int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_LEFT:
 				//ANDA
+				if (((Tanque*)tanqueUsable)->getUsandose() == true)
+				{
+					if (tanqueUsable->getX() > 0)
+					{
+						tanqueUsable->setX((tanqueUsable->getX()) - (tanqueUsable->getVelocidad()));
+						tanqueUsable->setImage(3);
+						((Tanque*)tanqueUsable)->getBalaTanque()->setImage(3);
+					}
+				}
 				if (player->getX() > 0)
 				{
 					player->setX(player->getX() - velocidadJugador);
@@ -226,6 +273,15 @@ int main(int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_RIGHT:
 				//ANDA
+				if (((Tanque*)tanqueUsable)->getUsandose() == true)
+				{
+					if (tanqueUsable->getX() < widthPantalla - tanqueUsable ->getH())
+					{
+						tanqueUsable->setX((tanqueUsable->getX()) + (tanqueUsable->getVelocidad()));
+						tanqueUsable->setImage(2);
+						((Tanque*)tanqueUsable)->getBalaTanque()->setImage(2);
+					}
+				}
 				if (player->getX() < widthPantalla - player->getH())
 				{
 					player->setX(player->getX() + velocidadJugador);
@@ -294,7 +350,7 @@ int main(int argc, char **argv)
 				}
 				break;
 			case ALLEGRO_KEY_SPACE:
-				if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+				if (ev.type == ALLEGRO_EVENT_KEY_DOWN && player->getDibujarse() == true)
 				{
 					if (cantBalas > 0)
 					{
@@ -359,10 +415,22 @@ int main(int argc, char **argv)
 			tanqueRojo->setMuerto(true);
 			((Tanque*)tanqueRojo)->setDisparoHabilitado(false);
 		}
+		if (tanqueUsable->getVida() <= 0)
+		{
+			tanqueUsable->setMuerto(true);
+			((Tanque*)tanqueRojo)->setDisparoHabilitado(false);
+			player->setDibujarse(true);
+		}
+		//COLICION JUGADOR CON TANQUE USABLE
+		if (player->colicionCuadrada(tanqueUsable->getW(), tanqueUsable->getH(), tanqueUsable->getX(), tanqueUsable->getY()))
+		{
+			((Tanque*)tanqueUsable)->setUsandose(true);
+			player->setDibujarse(false);
+		}
 		//COLICION JUGADOR CON BLINDADO
 		if (blindado->getMuerto() == false)
 		{
-			if (player->colicionCuadrada(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()))
+			if (player->colicionCuadrada(blindado->getW(), blindado->getH(), blindado->getX(), blindado->getY()) && player->getDibujarse() == true)
 			{
 				//gameOver = true;
 				cout << player->getVidas() << endl;
@@ -378,14 +446,14 @@ int main(int argc, char **argv)
 
 			}
 		}
-		//COLICION BALA del TANQUE CON JUGAOR (no anda) PROGRAMAR COLICICON BALA del TANQUE CON JUGADOR
-		if(((Tanque*)tanqueRojo)->getBalaTanque()->colicion(player->getW(),player->getH(),player->getX(),player->getY()))
+		//COLICION BALA del TANQUE CON JUGAOR
+		if(((Tanque*)tanqueRojo)->getBalaTanque()->colicion(player->getW(),player->getH(),player->getX(),player->getY()) && player->getDibujarse() == true)
 		{
 			cout << player->getVidas() << endl;
 			player->setVidas(player->getVidas() - 1);	
 		}
 		//COLICION TANQUE JUGADOR
-		if (player->colicionCuadrada(tanqueRojo->getW(), tanqueRojo->getH(), tanqueRojo->getX(), tanqueRojo->getY()))
+		if (player->colicionCuadrada(tanqueRojo->getW(), tanqueRojo->getH(), tanqueRojo->getX(), tanqueRojo->getY()) && player->getDibujarse() == true)
 		{
 			cout << player->getVidas() << endl;
 			player->setVidas(player->getVidas() - 1);
@@ -419,7 +487,7 @@ int main(int argc, char **argv)
 		if (cazador1->getMuerto() == false)
 		{
 			//COLICION JUGADOR CON CAZADOR
-			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()))
+			if (player->colicionCuadrada(cazador1->getW(), cazador1->getH(), cazador1->getX(), cazador1->getY()) && player->getDibujarse() == true)
 			{
 				cout << player->getVidas() << endl;
 				player->setVidas(player->getVidas() - 1);
